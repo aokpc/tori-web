@@ -1,0 +1,190 @@
+import React from "react";
+import { useEffect, useRef, useState } from "react";
+import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
+import { marked } from "marked";
+import "./base.css";
+import "./base-mobile.css";
+import { useMediaQuery } from "../media.ts";
+
+interface Link {
+  url: string;
+  name: string;
+}
+
+const SlideMenu: React.FC<
+  {
+    links: Link[];
+    op: [boolean, React.Dispatch<React.SetStateAction<boolean>>];
+  }
+> = ({ links, op: [isOpen, setIsOpen] }) => {
+  const navigate = useNavigate();
+  const menuRef = useRef<HTMLDivElement>(null);
+  const toggleMenu = () => setIsOpen(!isOpen);
+  const handleClickOutside = (event: MouseEvent) => {
+    if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
+      setIsOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    } else {
+      document.removeEventListener("mousedown", handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
+  (globalThis as any).toggleMenu = toggleMenu;
+  return (
+    <div ref={menuRef} className={`slide-menu ${isOpen ? "open" : ""}`}>
+      <div className="menu-links">
+        {links.map((link, index) =>
+          link.url.startsWith("/")
+            ? (
+              <div
+                key={index}
+                className="menu-link"
+                onClick={() => {
+                  navigate(link.url);
+                  setIsOpen(false);
+                }}
+              >
+                {link.name}
+              </div>
+            )
+            : (
+              <div
+                key={index}
+                className="menu-link"
+                onClick={() => {
+                  open(link.url);
+                  setIsOpen(false);
+                }}
+              >
+                {link.name}
+              </div>
+            )
+        )}
+      </div>
+    </div>
+  );
+};
+
+export function Halo({ links }: { links: Link[] }) {
+  const isMobile = useMediaQuery();
+  const navigate = useNavigate();
+  const op = useState(false);
+  if (isMobile) {
+    return (
+      <div className="halo">
+        <div className="halo-content" onClick={() => navigate("/")}>
+          <span className="logo"></span>
+          <span className="title">開成鳥人間の会</span>
+        </div>
+        <div
+          className="menu-button"
+          onClick={() => {
+            op[1](true);
+          }}
+        >
+          <svg
+            width="80"
+            height="80"
+            viewBox="0 0 16 24"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="m4 5c-.5523 0-1 .4477-1 1 0 .5523.4477 1 1 1h12c.5523 0 1-.4477 1-1 0-.5523-.4477-1-1-1h-16z"
+              fill="currentColor"
+            />
+            <path
+              d="m4 9c-.5523 0-1 .4477-1 1 0 .5523.4477 1 1 1h12c.5523 0 1-.4477 1-1 0-.5523-.4477-1-1-1h-16z"
+              fill="currentColor"
+            />
+            <path
+              d="m4 13c-.5523 0-1 .4477-1 1 0 .5523.4477 1 1 1h12c.5523 0 1-.4477 1-1 0-.5523-.4477-1-1-1h-16z"
+              fill="currentColor"
+            />
+          </svg>
+        </div>
+        <SlideMenu op={op} links={links} />
+      </div>
+    );
+  } else {
+    return (
+      <div className="halo">
+        <div className="halo-content" onClick={() => navigate("/")}>
+          <span className="logo"></span>
+          <span className="title">開成鳥人間の会</span>
+        </div>
+        {links.map((link, index) =>
+          link.url.startsWith("/")
+            ? (
+              <div
+                className="halo-content"
+                key={index}
+                onClick={() => navigate(link.url)}
+              >
+                <span className="link">{link.name}</span>
+              </div>
+            )
+            : (
+              <div
+                className="halo-content"
+                key={index}
+                onClick={() => open(link.url)}
+              >
+                <span className="link">{link.name}</span>
+              </div>
+            )
+        )}
+      </div>
+    );
+  }
+}
+
+export function Page({ children }: { children?: React.ReactNode }) {
+  const isMobile = useMediaQuery();
+  return (
+    <div className={isMobile ? "page-mobile" : "page"}>
+      <div className="page-content">
+        {children}
+      </div>
+    </div>
+  );
+}
+
+export const links = [
+  { url: "/", name: "トップ" },
+  { url: "/notice", name: "お知らせ" },
+  { url: "/member", name: "メンバー" },
+  { url: "/history", name: "沿革" },
+  { url: "/activity", name: "活動報告" },
+  { url: "/design", name: "機体設計" },
+  { url: "https://x.com/kaisei_birdman", name: "X" },
+  {
+    url: "https://www.instagram.com/kaisei_birdman/",
+    name: "Instagram",
+  },
+];
+export function Md2Html(md: string): JSX.Element {
+  const n = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    const html = marked.parse(md);
+    if (typeof html === "object") {
+      html.then((s) => {
+        if (n.current) {
+          n.current.innerHTML = s;
+        }
+      });
+    } else {
+      if (n.current) {
+        n.current.innerHTML = html;
+      }
+    }
+  }, [md]);
+  return <div ref={n} />;
+}
