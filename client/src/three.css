@@ -1,5 +1,11 @@
 .three {
-  width: calc(70vw - 20px);
+  width: calc(1015px - 20px);
+  height: calc(100vh - 200px);
+  display: block;
+}
+
+.three-mobile {
+  width: calc(100vw - 20px);
   height: calc(100vh - 200px);
   display: block;
 }

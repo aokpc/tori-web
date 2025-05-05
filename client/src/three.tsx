@@ -2,12 +2,14 @@ import { useEffect, useRef } from "react";
 import * as THREE from "three";
 import { STLLoader } from "three/examples/jsm/loaders/STLLoader";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
+import { useMediaQuery } from "./media.ts";
 
 import "./three.css";
 
 export function GLBViewer({ src }: { src: string }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const modelRef = useRef<THREE.Object3D>();
+  const isMobile = useMediaQuery();
 
   useEffect(() => {
     if (!canvasRef.current) return;
@@ -88,12 +90,74 @@ export function GLBViewer({ src }: { src: string }) {
       isDragging = false;
     };
 
+    const onMouseWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      if (!modelRef.current) return;
+      const scale = modelRef.current.scale.x + e.deltaY * 0.01;
+      if (scale <= 0) return;
+      modelRef.current.scale.set(scale, scale, scale);
+    };
+
+    let isZooming = false;
+    let zoomTouch: [number, number][] = [];
+    const onTouchStart = (e: TouchEvent) => {
+      if (e.touches.length === 1) {
+        isDragging = true;
+        lastX = e.touches[0].clientX;
+        lastY = e.touches[0].clientY;
+      } else if (e.touches.length === 2) {
+        isZooming = true;
+        zoomTouch[0] = [e.touches[0].clientX, e.touches[0].clientY];
+        zoomTouch[1] = [e.touches[1].clientX, e.touches[1].clientY];
+      }
+    };
+    const onTouchMove = (e: TouchEvent) => {
+      if (isDragging && modelRef.current) {
+        const deltaX = e.touches[0].clientX - lastX;
+        const deltaY = e.touches[0].clientY - lastY;
+        lastX = e.touches[0].clientX;
+        lastY = e.touches[0].clientY;
+        modelRef.current.rotation.y += deltaX * 0.01;
+        modelRef.current.rotation.x += deltaY * 0.01;
+      } else if (isZooming && modelRef.current) {
+        const newZoomTouch: [number, number][] = [];
+        newZoomTouch[0] = [e.touches[0].clientX, e.touches[0].clientY];
+        newZoomTouch[1] = [e.touches[1].clientX, e.touches[1].clientY];
+        const dist1 = Math.sqrt(
+          Math.pow(zoomTouch[0][0] - zoomTouch[1][0], 2) +
+            Math.pow(zoomTouch[0][1] - zoomTouch[1][1], 2),
+        );
+        const dist2 = Math.sqrt(
+          Math.pow(newZoomTouch[0][0] - newZoomTouch[1][0], 2) +
+            Math.pow(newZoomTouch[0][1] - newZoomTouch[1][1], 2),
+        );
+        const scale = modelRef.current.scale.x + (dist2 - dist1) * 0.01;
+        if (scale <= 0) return;
+        modelRef.current.scale.set(scale, scale, scale);
+        zoomTouch = newZoomTouch;
+      }
+    };
+    const onTouchEnd = () => {
+      isDragging = false;
+      isZooming = false;
+      zoomTouch = [];
+    };
+
     canvasRef.current.addEventListener("mousedown", onMouseDown);
     canvasRef.current.addEventListener("mousemove", onMouseMove);
     canvasRef.current.addEventListener("mouseup", onMouseUp);
     canvasRef.current.addEventListener("mouseleave", onMouseUp);
+    canvasRef.current.addEventListener("wheel", onMouseWheel);
+    canvasRef.current.addEventListener("touchstart", onTouchStart);
+    canvasRef.current.addEventListener("touchmove", onTouchMove);
+    canvasRef.current.addEventListener("touchend", onTouchEnd);
+    canvasRef.current.addEventListener("touchcancel", onTouchEnd);
+    canvasRef.current.addEventListener("contextmenu", (e) => {
+      e.preventDefault();
+    });
 
     const animate = () => {
+      if (!canvasRef.current) return;
       requestAnimationFrame(animate);
       renderer.render(scene, camera);
     };
@@ -104,6 +168,11 @@ export function GLBViewer({ src }: { src: string }) {
       canvasRef.current?.removeEventListener("mousemove", onMouseMove);
       canvasRef.current?.removeEventListener("mouseup", onMouseUp);
       canvasRef.current?.removeEventListener("mouseleave", onMouseUp);
+      canvasRef.current?.removeEventListener("wheel", onMouseWheel);
+      canvasRef.current?.removeEventListener("touchstart", onTouchStart);
+      canvasRef.current?.removeEventListener("touchmove", onTouchMove);
+      canvasRef.current?.removeEventListener("touchend", onTouchEnd);
+      canvasRef.current?.removeEventListener("touchcancel", onTouchEnd);
       renderer.dispose();
     };
   }, []);
@@ -111,10 +180,14 @@ export function GLBViewer({ src }: { src: string }) {
   return (
     <canvas
       ref={canvasRef}
-      className="three"
+      className={isMobile ? "three-mobile" : "three"}
     />
   );
 }
+
+/**
+ * @deprecated
+ */
 export function STLViewer({ src }: { src: string }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const meshRef = useRef<THREE.Mesh>();
