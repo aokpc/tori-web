@@ -133,6 +133,7 @@ export function GLBViewer({ src }: { src: string }) {
     };
     const onTouchMove = (e: TouchEvent) => {
       if (isDragging && modelRef.current) {
+        e.preventDefault();
         const deltaX = e.touches[0].clientX - lastX;
         const deltaY = e.touches[0].clientY - lastY;
         lastX = e.touches[0].clientX;
