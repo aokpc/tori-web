@@ -87,6 +87,7 @@ export function GLBViewer({ src }: { src: string }) {
     };
 
     _setScale.current = (scale: number) => {
+      if (scale <= 0) return;
       if (!modelRef.current) return;
       modelRef.current.scale.set(scale, scale, scale);
       isChanged = true;
@@ -123,25 +124,10 @@ export function GLBViewer({ src }: { src: string }) {
       isChanged = true;
     };
 
-    let isZooming = false;
-    let touchCount = 0;
-    let zoomTouch: [number, number, number][] = [];
     const onTouchStart = (e: TouchEvent) => {
       for (const touch of e.touches) {
-        touchCount++;
-        zoomTouch[touchCount % 2] = [
-          touch.clientX,
-          touch.clientY,
-          touch.identifier,
-        ];
         lastX = touch.clientX;
         lastY = touch.clientY;
-      }
-      if (touchCount === 2) {
-        isZooming = true;
-        isDragging = false;
-      } else if (touchCount === 1) {
-        isZooming = false;
         isDragging = true;
       }
     };
@@ -154,36 +140,10 @@ export function GLBViewer({ src }: { src: string }) {
         modelRef.current.rotation.y += deltaX * 0.01;
         modelRef.current.rotation.x += deltaY * 0.01;
         isChanged = true;
-      } else if (isZooming && modelRef.current) {
-        const newZoomTouch: [number, number, number] = [
-          e.touches[0].clientX,
-          e.touches[0].clientY,
-          e.touches[0].identifier,
-        ];
-        const oldZoomTouch = zoomTouch.find(
-          (touch) => touch[2] === e.touches[0].identifier,
-        );
-        if (oldZoomTouch) {
-          const deltaX = newZoomTouch[0] - oldZoomTouch[0];
-          const deltaY = newZoomTouch[1] - oldZoomTouch[1];
-          const scale = modelRef.current.scale.x + (deltaX + deltaY) * 0.01;
-          zoomTouch = zoomTouch.map((touch) => {
-            if (touch === oldZoomTouch) {
-              return newZoomTouch;
-            }
-            return touch;
-          });
-          if (scale <= 0) return;
-          modelRef.current.scale.set(scale, scale, scale);
-          isChanged = true;
-        }
       }
     };
     const onTouchEnd = () => {
-      touchCount = 0;
       isDragging = false;
-      isZooming = false;
-      zoomTouch = [];
     };
 
     canvasRef.current.addEventListener("mousedown", onMouseDown);
@@ -226,9 +186,14 @@ export function GLBViewer({ src }: { src: string }) {
     };
   }, []);
 
-  const setScale = (scale: number) => {
+  const setScale = (scale: number, add?: boolean) => {
     if (!_setScale.current) return;
-    _setScale.current(scale);
+    if (add && modelRef.current) {
+      scale += modelRef.current?.scale.x || 0;
+      _setScale.current(scale);
+    } else {
+      _setScale.current(scale);
+    }
   };
   const setRotate = (x: number, y: number) => {
     if (!_setRorate.current) return;
@@ -308,6 +273,22 @@ export function GLBViewer({ src }: { src: string }) {
         }}
       >
         下
+      </button>
+      <button
+        type="button"
+        onClick={() => {
+          setScale(1, true);
+        }}
+      >
+        拡大
+      </button>
+      <button
+        type="button"
+        onClick={() => {
+          setScale(-1, true);
+        }}
+      >
+        縮小
       </button>
     </div>
   );
