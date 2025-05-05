@@ -167,6 +167,12 @@ export function GLBViewer({ src }: { src: string }) {
           const deltaX = newZoomTouch[0] - oldZoomTouch[0];
           const deltaY = newZoomTouch[1] - oldZoomTouch[1];
           const scale = modelRef.current.scale.x + (deltaX + deltaY) * 0.01;
+          zoomTouch = zoomTouch.map((touch) => {
+            if (touch === oldZoomTouch) {
+              return newZoomTouch;
+            }
+            return touch;
+          });
           if (scale <= 0) return;
           modelRef.current.scale.set(scale, scale, scale);
           isChanged = true;
@@ -174,7 +180,7 @@ export function GLBViewer({ src }: { src: string }) {
       }
     };
     const onTouchEnd = () => {
-      touchCount--;
+      touchCount = 0;
       isDragging = false;
       isZooming = false;
       zoomTouch = [];
