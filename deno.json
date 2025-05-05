@@ -11,6 +11,7 @@
     "@std/assert": "jsr:@std/assert@1",
     "@types/react": "npm:@types/react@^18.3.12",
     "@vitejs/plugin-react": "npm:@vitejs/plugin-react@^4.3.3",
+    "localforage": "npm:localforage@^1.10.0",
     "react": "npm:react@^18.0.0",
     "react-dom": "npm:react-dom@^18.0.0",
     "react-router-dom": "npm:react-router-dom@^6.28.0",

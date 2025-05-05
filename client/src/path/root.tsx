@@ -28,7 +28,7 @@ function Top() {
   }, []);
   return (
     <div className="top" ref={topRef}>
-      <video src="/title.mp4" muted autoPlay></video>
+      <video src="/image/title.mp4" muted autoPlay></video>
     </div>
   );
 }

@@ -6,7 +6,7 @@ import { useMediaQuery } from "./media.ts";
 
 import "./three.css";
 
-export function GLBViewer({ src }: { src: string }) {
+export function GLBViewer({ src }: { src?: string | null }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const modelRef = useRef<THREE.Object3D>();
   const requestAnimate = useRef<() => void>();
@@ -17,6 +17,7 @@ export function GLBViewer({ src }: { src: string }) {
   const _setScale = useRef<(scale: number) => void>();
 
   useEffect(() => {
+    if (!src) return;
     let isChanged = true;
 
     if (!canvasRef.current) return;
@@ -185,7 +186,7 @@ export function GLBViewer({ src }: { src: string }) {
       canvasRef.current?.removeEventListener("touchcancel", onTouchEnd);
       renderer.dispose();
     };
-  }, []);
+  }, [src]);
 
   const setScale = (scale: number, add?: boolean) => {
     if (!_setScale.current) return;

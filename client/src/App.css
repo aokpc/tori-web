@@ -11,7 +11,7 @@ span.logo {
   display: inline-block;
   width: 50px;
   height: 50px;
-  background-image: url("/logo.png");
+  background-image: url("/image/logo.png");
   background-repeat: no-repeat;
   background-size: 40px;
   background-position: center;
@@ -63,12 +63,12 @@ div.page-content {
   font-family: serif;
 }
 
-.top video{
+.top video {
   position: absolute;
   top: 0;
   left: 0;
   z-index: 100;
-  background-image: url("/sky.webp");
+  background-color: #6d99cb;
   background-position: center;
   height: 100vh;
   width: 100vw;

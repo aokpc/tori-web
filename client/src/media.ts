@@ -6,15 +6,12 @@ export const useMediaQuery = (query: string = "width < 1000px") => {
 
   useEffect(() => {
     const mql = matchMedia(formattedQuery)
-    console.log(mql.matches);
-
     if (mql.media === 'not all' || mql.media === 'invalid') {
       console.error(`useMediaQuery Error: Invalid media query`)
     }
 
     mql.onchange = (e) => {
       setMatch(e.matches)
-      console.log(e.matches);
     }
 
     return () => {
