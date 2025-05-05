@@ -14,7 +14,7 @@
     "react": "npm:react@^18.0.0",
     "react-dom": "npm:react-dom@^18.0.0",
     "react-router-dom": "npm:react-router-dom@^6.28.0",
-    "three": "npm:three@^0.176.0",
+    "three": "npm:three@0.176.0",
     "vite": "npm:vite@^5.4.11",
     "marked": "npm:marked@^15.0.11"
   },

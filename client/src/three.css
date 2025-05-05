@@ -1,0 +1,5 @@
+.three {
+  width: calc(70vw - 20px);
+  height: calc(100vh - 200px);
+  display: block;
+}

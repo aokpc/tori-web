@@ -23,7 +23,8 @@
     "npm:react-dom@18": "18.3.1_react@18.3.1",
     "npm:react-router-dom@^6.28.0": "6.30.0_react@18.3.1_react-dom@18.3.1__react@18.3.1",
     "npm:react@18": "18.3.1",
-    "npm:three@0.176": "0.176.0",
+    "npm:three@0.106.0": "0.106.0",
+    "npm:three@0.176.0": "0.176.0",
     "npm:vite@*": "5.4.14",
     "npm:vite@^5.4.11": "5.4.14"
   },
@@ -659,6 +660,9 @@
     "source-map-js@1.2.1": {
       "integrity": "sha512-UXWMKhLOwVKb728IUtQPXxfYU+usdybtUrK/8uGE8CQMvrhOpwvzDBwj0QhSL7MQc7vIsISBG8VQ8+IDQxpfQA=="
     },
+    "three@0.106.0": {
+      "integrity": "sha512-fUMDenzhJDf+DNLPrQqDTbVYbXb/2Q4Y4EDBsDORS3UIR9GairCpFXzn9uOq+htVyagJGBsBpx8eyKQeXs/9YQ=="
+    },
     "three@0.176.0": {
       "integrity": "sha512-PWRKYWQo23ojf9oZSlRGH8K09q7nRSWx6LY/HF/UUrMdYgN9i1e2OwJYHoQjwc6HF/4lvvYLC5YC1X8UJL2ZpA=="
     },
@@ -697,7 +701,7 @@
       "npm:react-dom@18",
       "npm:react-router-dom@^6.28.0",
       "npm:react@18",
-      "npm:three@0.176",
+      "npm:three@0.176.0",
       "npm:vite@^5.4.11"
     ]
   }
