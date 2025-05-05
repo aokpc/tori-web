@@ -1,7 +1,7 @@
 {
   "tasks": {
     "dev": "deno run -A --node-modules-dir=auto npm:vite",
-    "build": "deno run -A --node-modules-dir=auto npm:vite build && cp -r client/dist docs",
+    "build": "rm -rf ./docs && deno run -A --node-modules-dir=auto npm:vite build && cp -r ./client/dist ./docs",
     "server:start": "deno run -A --node-modules-dir --watch ./dev-server/main.ts",
     "serve": "deno task build && deno task server:start"
   },
