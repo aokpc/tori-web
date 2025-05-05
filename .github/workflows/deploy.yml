@@ -37,7 +37,7 @@ jobs:
       - name: Upload to Deno Deploy
         uses: denoland/deployctl@v1
         with:
-          project: "keisukeaoki-tori-web-96"
+          project: "ks-tori-web-96ga2hvs"
           entrypoint: "server/main.ts"
           root: ""
           
