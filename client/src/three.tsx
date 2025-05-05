@@ -124,16 +124,25 @@ export function GLBViewer({ src }: { src: string }) {
     };
 
     let isZooming = false;
-    let zoomTouch: [number, number][] = [];
+    let touchCount = 0;
+    let zoomTouch: [number, number, number][] = [];
     const onTouchStart = (e: TouchEvent) => {
-      if (e.touches.length === 1) {
-        isDragging = true;
-        lastX = e.touches[0].clientX;
-        lastY = e.touches[0].clientY;
-      } else if (e.touches.length === 2) {
+      for (const touch of e.touches) {
+        touchCount++;
+        zoomTouch[touchCount % 2] = [
+          touch.clientX,
+          touch.clientY,
+          touch.identifier,
+        ];
+        lastX = touch.clientX;
+        lastY = touch.clientY;
+      }
+      if (touchCount === 2) {
         isZooming = true;
-        zoomTouch[0] = [e.touches[0].clientX, e.touches[0].clientY];
-        zoomTouch[1] = [e.touches[1].clientX, e.touches[1].clientY];
+        isDragging = false;
+      } else if (touchCount === 1) {
+        isZooming = false;
+        isDragging = true;
       }
     };
     const onTouchMove = (e: TouchEvent) => {
@@ -146,22 +155,23 @@ export function GLBViewer({ src }: { src: string }) {
         modelRef.current.rotation.x += deltaY * 0.01;
         isChanged = true;
       } else if (isZooming && modelRef.current) {
-        const newZoomTouch: [number, number][] = [];
-        newZoomTouch[0] = [e.touches[0].clientX, e.touches[0].clientY];
-        newZoomTouch[1] = [e.touches[1].clientX, e.touches[1].clientY];
-        const dist1 = Math.sqrt(
-          Math.pow(zoomTouch[0][0] - zoomTouch[1][0], 2) +
-            Math.pow(zoomTouch[0][1] - zoomTouch[1][1], 2),
+        const newZoomTouch: [number, number, number] = [
+          e.touches[0].clientX,
+          e.touches[0].clientY,
+          e.touches[0].identifier,
+        ];
+        const oldZoomTouch = zoomTouch.find(
+          (touch) => touch[2] === e.touches[0].identifier,
         );
-        const dist2 = Math.sqrt(
-          Math.pow(newZoomTouch[0][0] - newZoomTouch[1][0], 2) +
-            Math.pow(newZoomTouch[0][1] - newZoomTouch[1][1], 2),
-        );
-        const scale = modelRef.current.scale.x + (dist2 - dist1) * 0.01;
-        if (scale <= 0) return;
-        modelRef.current.scale.set(scale, scale, scale);
-        zoomTouch = newZoomTouch;
-        isChanged = true;
+        if (oldZoomTouch) {
+          const deltaX = newZoomTouch[0] - oldZoomTouch[0];
+          const deltaY = newZoomTouch[1] - oldZoomTouch[1];
+          const scale = modelRef.current.scale.x +
+            Math.sqrt(deltaX ** 2 + deltaY ** 2) * 0.01;
+          if (scale <= 0) return;
+          modelRef.current.scale.set(scale, scale, scale);
+          isChanged = true;
+        }
       }
     };
     const onTouchEnd = () => {

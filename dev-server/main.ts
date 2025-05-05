@@ -14,6 +14,6 @@ app.use(routeIndexHTMLFrom(
   `${Deno.cwd()}/client/dist/`,
 ));
 if (import.meta.main) {
-  console.log("Server listening on port http://localhost");
-  await app.listen({ port: 80, hostname: "0.0.0.0" });
+  console.log("Server listening on port http://localhost:8000");
+  await app.listen({ port: 8000, hostname: "0.0.0.0" });
 }
