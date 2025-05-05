@@ -81,7 +81,10 @@ export function Halo({ links }: { links: Link[] }) {
       <div className="halo">
         <div className="halo-content" onClick={() => navigate("/")}>
           <span className="logo"></span>
-          <span className="title">開成鳥人間の会 KITE</span>
+          <div className="title">
+            開成鳥人間の会
+            <div className="kite">Kaisei Innovative Technology Engineering</div>
+          </div>
         </div>
         <div
           className="menu-button"
@@ -118,7 +121,10 @@ export function Halo({ links }: { links: Link[] }) {
       <div className="halo">
         <div className="halo-content" onClick={() => navigate("/")}>
           <span className="logo"></span>
-          <span className="title">開成鳥人間の会 KITE</span>
+          <div className="title">
+            開成鳥人間の会
+            <div className="kite">Kaisei Innovative Technology Engineering</div>
+          </div>
         </div>
         {links.map((link, index) =>
           link.url.startsWith("/")

@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-export const useMediaQuery = (query: string = "width < 1015px") => {
+export const useMediaQuery = (query: string = "width < 1000px") => {
   const formattedQuery = `(${query})`
   const [match, setMatch] = useState(matchMedia(formattedQuery).matches)
 

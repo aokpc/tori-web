@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { STLLoader } from "three/examples/jsm/loaders/STLLoader";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
@@ -9,9 +9,16 @@ import "./three.css";
 export function GLBViewer({ src }: { src: string }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const modelRef = useRef<THREE.Object3D>();
+  const requestAnimate = useRef<() => void>();
+  const rendererRef = useRef<THREE.WebGLRenderer>();
   const isMobile = useMediaQuery();
+  const [quality, setQuality] = useState(false);
+  const _setRorate = useRef<(x: number, y: number) => void>();
+  const _setScale = useRef<(scale: number) => void>();
 
   useEffect(() => {
+    let isChanged = true;
+
     if (!canvasRef.current) return;
 
     const scene = new THREE.Scene();
@@ -27,7 +34,8 @@ export function GLBViewer({ src }: { src: string }) {
       canvas: canvasRef.current,
       antialias: true,
     });
-    renderer.setPixelRatio(window.devicePixelRatio);
+    rendererRef.current = renderer;
+    renderer.setPixelRatio(1);
     renderer.setSize(
       canvasRef.current.clientWidth,
       canvasRef.current.clientHeight,
@@ -56,8 +64,10 @@ export function GLBViewer({ src }: { src: string }) {
         });
         model.scale.set(10, 10, 10);
         model.position.set(0, 0, 0);
+        model.rotation.set(Math.PI / 6, Math.PI / 6, 0);
         scene.add(model);
         modelRef.current = model;
+        isChanged = true;
       },
       undefined,
       (error) => {
@@ -68,6 +78,19 @@ export function GLBViewer({ src }: { src: string }) {
     let lastX = 0;
     let lastY = 0;
     let isDragging = false;
+
+    _setRorate.current = (x: number, y: number) => {
+      if (!modelRef.current) return;
+      modelRef.current.rotation.y = x;
+      modelRef.current.rotation.x = y;
+      isChanged = true;
+    };
+
+    _setScale.current = (scale: number) => {
+      if (!modelRef.current) return;
+      modelRef.current.scale.set(scale, scale, scale);
+      isChanged = true;
+    };
 
     const onMouseDown = (e: MouseEvent) => {
       isDragging = true;
@@ -84,6 +107,7 @@ export function GLBViewer({ src }: { src: string }) {
 
       modelRef.current.rotation.y += deltaX * 0.01;
       modelRef.current.rotation.x += deltaY * 0.01;
+      isChanged = true;
     };
 
     const onMouseUp = () => {
@@ -96,6 +120,7 @@ export function GLBViewer({ src }: { src: string }) {
       const scale = modelRef.current.scale.x + e.deltaY * 0.01;
       if (scale <= 0) return;
       modelRef.current.scale.set(scale, scale, scale);
+      isChanged = true;
     };
 
     let isZooming = false;
@@ -119,6 +144,7 @@ export function GLBViewer({ src }: { src: string }) {
         lastY = e.touches[0].clientY;
         modelRef.current.rotation.y += deltaX * 0.01;
         modelRef.current.rotation.x += deltaY * 0.01;
+        isChanged = true;
       } else if (isZooming && modelRef.current) {
         const newZoomTouch: [number, number][] = [];
         newZoomTouch[0] = [e.touches[0].clientX, e.touches[0].clientY];
@@ -135,6 +161,7 @@ export function GLBViewer({ src }: { src: string }) {
         if (scale <= 0) return;
         modelRef.current.scale.set(scale, scale, scale);
         zoomTouch = newZoomTouch;
+        isChanged = true;
       }
     };
     const onTouchEnd = () => {
@@ -156,10 +183,16 @@ export function GLBViewer({ src }: { src: string }) {
       e.preventDefault();
     });
 
+    requestAnimate.current = () => {
+      isChanged = true;
+    };
+
     const animate = () => {
       if (!canvasRef.current) return;
       requestAnimationFrame(animate);
+      if (!isChanged) return;
       renderer.render(scene, camera);
+      isChanged = false;
     };
     animate();
 
@@ -177,11 +210,90 @@ export function GLBViewer({ src }: { src: string }) {
     };
   }, []);
 
+  const setScale = (scale: number) => {
+    if (!_setScale.current) return;
+    _setScale.current(scale);
+  };
+  const setRotate = (x: number, y: number) => {
+    if (!_setRorate.current) return;
+    _setRorate.current(x, y);
+  };
+
   return (
-    <canvas
-      ref={canvasRef}
-      className={isMobile ? "three-mobile" : "three"}
-    />
+    <div>
+      <canvas
+        ref={canvasRef}
+        className={isMobile ? "three-mobile" : "three"}
+      />
+      <button
+        type="button"
+        onClick={() => {
+          setQuality(!quality);
+          if (rendererRef.current && requestAnimate.current) {
+            rendererRef.current.setPixelRatio(
+              quality ? 1 : window.devicePixelRatio,
+            );
+            requestAnimate.current();
+          }
+        }}
+      >
+        {quality ? "解像度:高" : "解像度:低"}
+      </button>
+      <button
+        type="button"
+        onClick={() => {
+          setRotate(0, Math.PI / 6);
+          setScale(10);
+        }}
+      >
+        正面
+      </button>
+      <button
+        type="button"
+        onClick={() => {
+          setRotate(Math.PI, Math.PI / 6);
+          setScale(10);
+        }}
+      >
+        背面
+      </button>
+      <button
+        type="button"
+        onClick={() => {
+          setRotate(Math.PI / 2, Math.PI / 6);
+          setScale(10);
+        }}
+      >
+        左
+      </button>
+      <button
+        type="button"
+        onClick={() => {
+          setRotate(-Math.PI / 2, Math.PI / 6);
+          setScale(10);
+        }}
+      >
+        右
+      </button>
+      <button
+        type="button"
+        onClick={() => {
+          setRotate(0, Math.PI / 2);
+          setScale(10);
+        }}
+      >
+        上
+      </button>
+      <button
+        type="button"
+        onClick={() => {
+          setRotate(0, -Math.PI / 2);
+          setScale(10);
+        }}
+      >
+        下
+      </button>
+    </div>
   );
 }
 

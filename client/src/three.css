@@ -1,5 +1,5 @@
 .three {
-  width: calc(1015px - 20px);
+  width: 980px;
   height: calc(100vh - 200px);
   display: block;
 }

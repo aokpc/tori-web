@@ -90,3 +90,26 @@ div.page-content {
 .fade-out {
   animation: fadeOut 2s ease-in-out forwards;
 }
+
+button {
+  background-color: #6d99cb;
+  border: none;
+  color: white;
+  padding: 5px 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #5a8bb0;
+}
+button:active {
+  background-color: #4a7a9e;
+}
+button:focus {
+  outline: none;
+}
