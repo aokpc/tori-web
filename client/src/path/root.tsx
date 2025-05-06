@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect, useRef, useState } from "react";
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
-import { Halo, links, Md2Html, Page } from "./base.tsx";
+import { Halo, links, Md2Html, Page, root } from "./base.tsx";
 
 export function Root() {
   const [top, setTop] = useState(localStorage.getItem("visited") !== "true");
@@ -44,13 +44,10 @@ function Body() {
   );
 }
 
-const desc =
-  `# 開成鳥人間の会 KITE`;
-
 function Desc() {
   return (
     <Page>
-        {Md2Html(desc)}
+      <Md2Html md={root} />
     </Page>
   );
 }

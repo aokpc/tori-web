@@ -12,7 +12,8 @@ export function GLBViewer({ src }: { src?: string | null }) {
   const requestAnimate = useRef<() => void>();
   const rendererRef = useRef<THREE.WebGLRenderer>();
   const isMobile = useMediaQuery();
-  const [quality, setQuality] = useState(false);
+  const [quality, setQuality] = useState(true);
+  const [isLoading, setIsLoading] = useState(true);
   const _setRorate = useRef<(x: number, y: number) => void>();
   const _setScale = useRef<(scale: number) => void>();
 
@@ -173,6 +174,7 @@ export function GLBViewer({ src }: { src?: string | null }) {
       isChanged = false;
     };
     animate();
+    setIsLoading(false);
 
     return () => {
       canvasRef.current?.removeEventListener("mousedown", onMouseDown);
@@ -204,6 +206,7 @@ export function GLBViewer({ src }: { src?: string | null }) {
 
   return (
     <div>
+      {isLoading && <h1 className="loading">Loading...</h1>}
       <canvas
         ref={canvasRef}
         className={isMobile ? "three-mobile" : "three"}

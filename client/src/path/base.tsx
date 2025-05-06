@@ -36,9 +36,12 @@ const SlideMenu: React.FC<
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isOpen]);
-  (globalThis as any).toggleMenu = toggleMenu;
   return (
-    <div ref={menuRef} className={`slide-menu ${isOpen ? "open" : ""}`}>
+    <div
+      ref={menuRef}
+      className={`slide-menu ${isOpen ? "open" : ""}`}
+      onMouseLeave={() => setIsOpen(false)}
+    >
       <div className="menu-links">
         {links.map((link, index) =>
           link.url.startsWith("/")
@@ -88,9 +91,8 @@ export function Halo({ links }: { links: Link[] }) {
         </div>
         <div
           className="menu-button"
-          onClick={() => {
-            op[1](true);
-          }}
+          onClick={() => op[1](true)}
+          onMouseEnter={() => op[1](true)}
         >
           <svg
             width="80"
@@ -134,7 +136,13 @@ export function Halo({ links }: { links: Link[] }) {
                 key={index}
                 onClick={() => navigate(link.url)}
               >
-                <span className="link">{link.name}</span>
+                <span
+                  className={location.pathname === link.url
+                    ? "link current"
+                    : "link"}
+                >
+                  {link.name}
+                </span>
               </div>
             )
             : (
@@ -176,7 +184,47 @@ export const links = [
     name: "Instagram",
   },
 ];
-export function Md2Html(md: string): JSX.Element {
+export const root = `# 開成鳥人間の会 KITE
+サンプルテキスト[サンプルリンク](/)
+## サンプルテキストh2
+サンプルテキスト
+### サンプルテキストh3
+サンプル**テキスト太字**
+`;
+
+export interface NoticeContent {
+  /**
+   * [Y, M, D]
+   */
+  date: [number, number, number];
+  title: string;
+  important?: boolean;
+  content?: string;
+}
+
+export const notice: NoticeContent[] = [
+  {
+    date: [1234, 5, 6],
+    title: "お知らせサンプルタイトル",
+    content: "お知らせサンプルテキスト\nお知らせサンプルテキスト",
+  },
+  {
+    date: [789, 10, 11],
+    important: true,
+    title: "お知らせサンプルタイトル重要",
+    content: "お知らせサンプルテキスト\nお知らせサンプルテキスト",
+  },
+];
+
+export function Md2Html(
+  props:
+    & { md: string }
+    & React.DetailedHTMLProps<
+      React.HTMLAttributes<HTMLDivElement>,
+      HTMLDivElement
+    >,
+): JSX.Element {
+  const { md } = props;
   const n = useRef<HTMLDivElement>(null);
   useEffect(() => {
     const html = marked.parse(md);
@@ -192,5 +240,5 @@ export function Md2Html(md: string): JSX.Element {
       }
     }
   }, [md]);
-  return <div ref={n} />;
+  return <div ref={n} {...{ ...props, md: undefined }} />;
 }
