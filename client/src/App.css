@@ -39,3 +39,11 @@ button:active {
 button:focus {
   outline: none;
 }
+
+.maintitle {
+  position: absolute;
+  font-size: 100px;
+  user-select: none;
+  -webkit-user-select: none;
+  color: #0000;
+}
