@@ -29,9 +29,12 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
           git switch --orphan gh-pages
-          # git rm -rf . ???
+          git rm -rf . ???
 
           cp -r client/dist/* .
+          
+          rm -rf client
+          rm -rf node_modules
           
           touch .nojekyll
           
