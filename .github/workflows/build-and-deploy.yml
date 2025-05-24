@@ -29,14 +29,9 @@ jobs:
           git config user.email "github-actions[bot]@users.noreply.github.com"
 
           git switch --orphan gh-pages
-          git rm -rf .
+          # git rm -rf . ???
 
-          if [ -d "client/dist" ]; then
-            cp -r client/dist/* .
-          else
-            echo "Error: client/dist directory does not exist."
-            exit 1
-          fi
+          cp -r client/dist/* .
           
           touch .nojekyll
           
