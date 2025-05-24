@@ -37,7 +37,7 @@ export function GLBViewer({ src }: { src?: string | null }) {
       antialias: true,
     });
     rendererRef.current = renderer;
-    renderer.setPixelRatio(1);
+    renderer.setPixelRatio(window.devicePixelRatio);
     renderer.setSize(
       canvasRef.current.clientWidth,
       canvasRef.current.clientHeight,
@@ -48,12 +48,12 @@ export function GLBViewer({ src }: { src?: string | null }) {
     light.position.set(5, 5, 5);
     scene.add(light);
 
-    const loader = new GLTFLoader();
+    const loader = new GLTFLoader() as any;
     loader.load(
       src,
-      (gltf) => {
+      (gltf: any) => {
         const model = gltf.scene;
-        gltf.scene.traverse((child) => {
+        gltf.scene.traverse((child: any) => {
           if (child instanceof THREE.Mesh) {
             const mat = child.material;
             if (mat.transmission) {
@@ -72,7 +72,7 @@ export function GLBViewer({ src }: { src?: string | null }) {
         isChanged = true;
       },
       undefined,
-      (error) => {
+      (error: any) => {
         console.error("Error loading GLB file:", error);
       },
     );

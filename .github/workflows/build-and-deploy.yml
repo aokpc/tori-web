@@ -1,0 +1,40 @@
+name: Deno Build and Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # push するには必要
+
+      - name: Set up Deno
+        uses: denoland/setup-deno@v1
+        with:
+          deno-version: v2.x
+
+      - name: Run Deno build task
+        run: deno task build
+
+      - name: Commit and push build output
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+
+          git switch --orphan gh-pages
+          git rm -rf .
+
+          cp -r client/dist/* .
+          
+          touch .nojekyll
+          
+          git add .
+          git commit -m "Build output from commit $GITHUB_SHA"
+          git push -f origin gh-pages
