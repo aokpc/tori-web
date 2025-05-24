@@ -33,7 +33,7 @@ jobs:
           cp -r client/dist/* .
           
           rm -rf client
-          rm -rf node_modules # ???
+          rm -rf node_modules # ??? なんか出てくるので消す
           
           touch .nojekyll
           
