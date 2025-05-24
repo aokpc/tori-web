@@ -31,7 +31,12 @@ jobs:
           git switch --orphan gh-pages
           git rm -rf .
 
-          cp -r client/dist/* .
+          if [ -d "client/dist" ]; then
+            cp -r client/dist/* .
+          else
+            echo "Error: client/dist directory does not exist."
+            exit 1
+          fi
           
           touch .nojekyll
           
