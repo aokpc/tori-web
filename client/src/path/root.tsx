@@ -1,7 +1,7 @@
 import React from "react";
 import { useEffect, useRef, useState } from "react";
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
-import { Halo, links, Md2Html, Page, root } from "./base.tsx";
+import { Halo, links, Md2Html, Page, root_contents } from "./base.tsx";
 
 export function Root() {
   const [top, setTop] = useState(localStorage.getItem("visited") !== "true");
@@ -47,7 +47,7 @@ function Body() {
 function Desc() {
   return (
     <Page>
-      <Md2Html md={root} />
+      <Md2Html md={root_contents} />
     </Page>
   );
 }

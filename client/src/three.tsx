@@ -14,8 +14,6 @@ export function GLBViewer({ src }: { src?: string | null }) {
   const isMobile = useMediaQuery();
   const [quality, setQuality] = useState(true);
   const [isLoading, setIsLoading] = useState(true);
-  const _setRorate = useRef<(x: number, y: number) => void>();
-  const _setScale = useRef<(scale: number) => void>();
 
   useEffect(() => {
     if (!src) return;
@@ -81,20 +79,6 @@ export function GLBViewer({ src }: { src?: string | null }) {
     let lastY = 0;
     let isDragging = false;
 
-    _setRorate.current = (x: number, y: number) => {
-      if (!modelRef.current) return;
-      modelRef.current.rotation.y = x;
-      modelRef.current.rotation.x = y;
-      isChanged = true;
-    };
-
-    _setScale.current = (scale: number) => {
-      if (scale <= 0) return;
-      if (!modelRef.current) return;
-      modelRef.current.scale.set(scale, scale, scale);
-      isChanged = true;
-    };
-
     const onMouseDown = (e: MouseEvent) => {
       isDragging = true;
       lastX = e.clientX;
@@ -149,6 +133,30 @@ export function GLBViewer({ src }: { src?: string | null }) {
       isDragging = false;
     };
 
+    const onHashChange = () => {
+      const hash = window.location.hash;
+      if (!hash) return;
+      if (!modelRef.current) return;
+      const param = new URLSearchParams(hash.slice(1));
+
+      if (param.has("x") && param.has("y")) {
+        const x = parseFloat(param.get("x") || "0");
+        const y = parseFloat(param.get("y") || "0");
+        modelRef.current.rotation.y = y / 180 * Math.PI;
+        modelRef.current.rotation.x = x / 180 * Math.PI;
+        isChanged = true;
+      }
+      if (param.has("s")) {
+        const scale = parseFloat(param.get("s") || "1");
+        if (scale > 0) {
+          modelRef.current.scale.set(scale, scale, scale);
+          isChanged = true;
+        }
+      }
+    };
+
+    window.addEventListener("hashchange", onHashChange);
+
     canvasRef.current.addEventListener("mousedown", onMouseDown);
     canvasRef.current.addEventListener("mousemove", onMouseMove);
     canvasRef.current.addEventListener("mouseup", onMouseUp);
@@ -169,9 +177,16 @@ export function GLBViewer({ src }: { src?: string | null }) {
     const animate = () => {
       if (!canvasRef.current) return;
       requestAnimationFrame(animate);
-      if (!isChanged) return;
+      if (!isChanged || !modelRef.current) return;
+      modelRef.current.rotation.x = modelRef.current.rotation.x % (Math.PI * 2);
+      modelRef.current.rotation.y = modelRef.current.rotation.y % (Math.PI * 2);
       renderer.render(scene, camera);
       isChanged = false;
+      location.hash = `#x=${
+        (modelRef.current.rotation.x ?? 0) / Math.PI * 180
+      }&y=${(modelRef.current.rotation.y ?? 0) / Math.PI * 180}&s=${
+        modelRef.current.scale.x ?? 1
+      }`;
     };
     animate();
     setIsLoading(false);
@@ -186,23 +201,10 @@ export function GLBViewer({ src }: { src?: string | null }) {
       canvasRef.current?.removeEventListener("touchmove", onTouchMove);
       canvasRef.current?.removeEventListener("touchend", onTouchEnd);
       canvasRef.current?.removeEventListener("touchcancel", onTouchEnd);
+      window.removeEventListener("hashchange", onHashChange);
       renderer.dispose();
     };
   }, [src]);
-
-  const setScale = (scale: number, add?: boolean) => {
-    if (!_setScale.current) return;
-    if (add && modelRef.current) {
-      scale += modelRef.current?.scale.x || 0;
-      _setScale.current(scale);
-    } else {
-      _setScale.current(scale);
-    }
-  };
-  const setRotate = (x: number, y: number) => {
-    if (!_setRorate.current) return;
-    _setRorate.current(x, y);
-  };
 
   return (
     <div>
@@ -228,8 +230,7 @@ export function GLBViewer({ src }: { src?: string | null }) {
       <button
         type="button"
         onClick={() => {
-          setRotate(0, Math.PI / 6);
-          setScale(10);
+          location.hash = "#x=30&y=30&s=10";
         }}
       >
         正面
@@ -237,52 +238,8 @@ export function GLBViewer({ src }: { src?: string | null }) {
       <button
         type="button"
         onClick={() => {
-          setRotate(Math.PI, Math.PI / 6);
-          setScale(10);
-        }}
-      >
-        背面
-      </button>
-      <button
-        type="button"
-        onClick={() => {
-          setRotate(Math.PI / 2, Math.PI / 6);
-          setScale(10);
-        }}
-      >
-        左
-      </button>
-      <button
-        type="button"
-        onClick={() => {
-          setRotate(-Math.PI / 2, Math.PI / 6);
-          setScale(10);
-        }}
-      >
-        右
-      </button>
-      <button
-        type="button"
-        onClick={() => {
-          setRotate(0, Math.PI / 2);
-          setScale(10);
-        }}
-      >
-        上
-      </button>
-      <button
-        type="button"
-        onClick={() => {
-          setRotate(0, -Math.PI / 2);
-          setScale(10);
-        }}
-      >
-        下
-      </button>
-      <button
-        type="button"
-        onClick={() => {
-          setScale(1, true);
+          const scale = modelRef.current?.scale.x ?? 1;
+          location.hash = "#s="+ (scale ** 1.1);
         }}
       >
         拡大
@@ -290,7 +247,10 @@ export function GLBViewer({ src }: { src?: string | null }) {
       <button
         type="button"
         onClick={() => {
-          setScale(-1, true);
+          const scale = modelRef.current?.scale.x ?? 1;
+          if (scale > 1) {
+            location.hash = "#s=" + (scale ** 0.9);
+          }
         }}
       >
         縮小

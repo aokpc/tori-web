@@ -1,9 +1,9 @@
 {
   "tasks": {
     "dev": "deno run -A --node-modules-dir=auto npm:vite",
-    "build-do-not-use": "deno run -A --node-modules-dir=auto npm:vite build && cp ./client/dist/index.html ./client/dist/404.html && echo 'kite-birdman.f5.si' > ./client/dist/CNAME",
+    "build-": "deno run -A --node-modules-dir=auto npm:vite build && cp ./client/dist/index.html ./client/dist/404.html && echo 'kite-birdman.f5.si' > ./client/dist/CNAME",
     "server:start": "deno run -A --node-modules-dir --watch ./dev-server/main.ts",
-    "serve": "deno task build && deno task server:start"
+    "serve": "deno task build- && deno task server:start"
   },
   "imports": {
     "@deno/vite-plugin": "npm:@deno/vite-plugin@^1.0.0",

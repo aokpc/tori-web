@@ -9,10 +9,10 @@ export default function App() {
     <div className="app">
       <BrowserRouter>
         <Routes>
+          {/* ./contents.tsも */}
           <Route path="/" element={<Path.Root />} />
           <Route path="/notice" element={<Path.Notice />} />
           <Route path="/member" element={<Path.Member />} />
-          <Route path="/history" element={<Path.History />} />
           <Route path="/activity" element={<Path.Activity />} />
           <Route path="/design" element={<Path.Design />} />
         </Routes>

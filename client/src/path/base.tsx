@@ -6,6 +6,8 @@ import "./base.css";
 import "./base-mobile.css";
 import { useMediaQuery } from "../media.ts";
 
+export * from "../contents.ts"
+
 interface Link {
   url: string;
   name: string;
@@ -170,51 +172,6 @@ export function Page({ children }: { children?: React.ReactNode }) {
     </div>
   );
 }
-
-export const links = [
-  { url: "/", name: "トップ" },
-  { url: "/notice", name: "お知らせ" },
-  { url: "/member", name: "メンバー" },
-  { url: "/history", name: "沿革" },
-  { url: "/activity", name: "活動報告" },
-  { url: "/design", name: "機体設計" },
-  { url: "https://x.com/kaisei_birdman", name: "X" },
-  {
-    url: "https://www.instagram.com/kaisei_birdman/",
-    name: "Instagram",
-  },
-];
-export const root = `# 開成鳥人間の会 KITE
-サンプルテキスト[サンプルリンク](/)
-## サンプルテキストh2
-サンプルテキスト
-### サンプルテキストh3
-サンプル**テキスト太字**
-`;
-
-export interface NoticeContent {
-  /**
-   * [Y, M, D]
-   */
-  date: [number, number, number];
-  title: string;
-  important?: boolean;
-  content?: string;
-}
-
-export const notice: NoticeContent[] = [
-  {
-    date: [1234, 5, 6],
-    title: "お知らせサンプルタイトル",
-    content: "お知らせサンプルテキスト\nお知らせサンプルテキスト",
-  },
-  {
-    date: [789, 10, 11],
-    important: true,
-    title: "お知らせサンプルタイトル重要",
-    content: "お知らせサンプルテキスト\nお知らせサンプルテキスト",
-  },
-];
 
 export function Md2Html(
   props:

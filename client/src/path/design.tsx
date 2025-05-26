@@ -1,10 +1,8 @@
 import React from "react";
-import { Halo, links, Page } from "./base.tsx";
-import { useCache } from "../res.ts";
+import { Halo, links, Page,design_contents,Md2Html } from "./base.tsx";
 import { GLBViewer, STLViewer } from "../three.tsx";
 
 export function Design() {
-  const data = useCache("/3d/airplane.glb", "blob");
   return (
     <>
       <Halo
@@ -12,7 +10,8 @@ export function Design() {
       />
       <Page>
         <h1>機体設計</h1>
-        <GLBViewer src={data} />
+        <GLBViewer src="/3d/airplane.glb" />
+        <Md2Html md={design_contents} />
       </Page>
     </>
   );

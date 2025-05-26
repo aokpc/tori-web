@@ -10,6 +10,7 @@
   flex-direction: column;
   font-family: sans-serif, "Gill Sans", "Gill Sans MT", Calibri, "Trebuchet MS";
   font-size: 17px;
+  text-shadow: none;
 }
 
 .notice .head .title {
