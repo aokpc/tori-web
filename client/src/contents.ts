@@ -111,6 +111,7 @@ export const activity: ActivityContent[] = [
   }, {
     title: "活動報告サンプルタイトル3",
     content: "活動報告サンプルテキスト\n活動報告サンプルテキスト",
+    image: "tori_kanyu.png"
   }, {
     title: "活動報告サンプルタイトル4",
     content: "活動報告サンプルテキスト\n活動報告サンプルテキスト",
