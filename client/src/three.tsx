@@ -6,6 +6,9 @@ import { useMediaQuery } from "./media.ts";
 
 import "./three.css";
 
+/**
+ * GLBファイルを表示するコンポーネント
+ */
 export function GLBViewer({ src }: { src?: string | null }) {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const modelRef = useRef<THREE.Object3D>();
@@ -45,6 +48,10 @@ export function GLBViewer({ src }: { src?: string | null }) {
     const light = new THREE.DirectionalLight(0xffffff, 1);
     light.position.set(5, 5, 5);
     scene.add(light);
+
+    const light2 = new THREE.DirectionalLight(0xffffff, 1);
+    light2.position.set(-5, -5, 5);
+    scene.add(light2);
 
     const loader = new GLTFLoader() as any;
     loader.load(
@@ -104,8 +111,8 @@ export function GLBViewer({ src }: { src?: string | null }) {
     const onMouseWheel = (e: WheelEvent) => {
       e.preventDefault();
       if (!modelRef.current) return;
-      const scale = modelRef.current.scale.x + e.deltaY * 0.01;
-      if (scale <= 0) return;
+      const scale = modelRef.current.scale.x * (1 + e.deltaY * 0.005);
+      if (scale <= 1) return;
       modelRef.current.scale.set(scale, scale, scale);
       isChanged = true;
     };
@@ -239,7 +246,7 @@ export function GLBViewer({ src }: { src?: string | null }) {
         type="button"
         onClick={() => {
           const scale = modelRef.current?.scale.x ?? 1;
-          location.hash = "#s="+ (scale ** 1.1);
+          location.hash = "#s=" + (scale ** 1.1);
         }}
       >
         拡大

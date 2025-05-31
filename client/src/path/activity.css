@@ -1,0 +1,26 @@
+.activity-contents{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.activity-contents-mobile{
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    gap: 10px;
+}
+
+.activity-image{
+    width: 300px;
+}
+
+.activity{
+    width: 440px;
+    margin: 10px;
+}
+
+.activity-mobile{
+    margin: 5px;
+}

@@ -47,3 +47,40 @@ button:focus {
   -webkit-user-select: none;
   color: #0000;
 }
+
+span.x-logo {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  background-repeat: no-repeat;
+  background-size: 18px;
+  background-position: center;
+  background-image: url("/image/x_logo_w.png");
+}
+
+span.instagram-logo {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  background-repeat: no-repeat;
+  background-size: 18px;
+  background-position: center;
+  background-image: url("/image/instagram_logo.png");
+}
+
+.center{
+  width: calc(var(--width) - 20px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: #0008;
+}
+.center a{
+  color: #fff;
+  text-decoration: none;
+}
+.center a:hover{
+  color: #fff;
+}

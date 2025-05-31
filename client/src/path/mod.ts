@@ -1,3 +1,7 @@
+/**
+ * ルーティングの諸々をexportする
+ */
+
 export * from "./activity.tsx";
 export * from "./design.tsx";
 export * from "./member.tsx";

@@ -2,6 +2,9 @@ import React from "react";
 import { Halo, links, Page,design_contents,Md2Html } from "./base.tsx";
 import { GLBViewer, STLViewer } from "../three.tsx";
 
+/**
+ * 機体設計ページのコンポーネント
+ */
 export function Design() {
   return (
     <>

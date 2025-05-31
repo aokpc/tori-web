@@ -1,5 +1,8 @@
 import { useEffect, useState } from 'react'
 
+/**
+ * 基本的にスマホとPCの切り替えに使う
+ */
 export const useMediaQuery = (query: string = "width < 1000px") => {
   const formattedQuery = `(${query})`
   const [match, setMatch] = useState(matchMedia(formattedQuery).matches)

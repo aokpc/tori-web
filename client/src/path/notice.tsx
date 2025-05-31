@@ -5,6 +5,9 @@ import { Halo, links, Md2Html, notice, NoticeContent, Page } from "./base.tsx";
 
 import "./notice.css";
 
+/**
+ * お知らせページのコンポーネント
+ */
 export function Notice() {
   return (
     <>

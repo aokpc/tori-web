@@ -4,6 +4,9 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import "./App.css";
 import * as Path from "./path/mod.ts";
 
+/**
+ * 全てのルーティングを定義するコンポーネント
+ */
 export default function App() {
   return (
     <div className="app">

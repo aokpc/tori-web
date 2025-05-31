@@ -1,3 +1,6 @@
+/**
+ * サイトで使用する基本的なコンポーネントとスタイルを定義します。
+ */
 import React from "react";
 import { useEffect, useRef, useState } from "react";
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
@@ -13,6 +16,9 @@ interface Link {
   name: string;
 }
 
+/**
+ * スライドメニューを定義
+ */
 const SlideMenu: React.FC<
   {
     links: Link[];
@@ -77,6 +83,11 @@ const SlideMenu: React.FC<
   );
 };
 
+/**
+ * ヘッダーのコンポーネント
+ * スマホとPCで表示が変わる
+ * スマホではスライドメニューを使用
+ */
 export function Halo({ links }: { links: Link[] }) {
   const isMobile = useMediaQuery();
   const navigate = useNavigate();
@@ -162,6 +173,9 @@ export function Halo({ links }: { links: Link[] }) {
   }
 }
 
+/**
+ * ページ部分のコンポーネント
+ */
 export function Page({ children }: { children?: React.ReactNode }) {
   const isMobile = useMediaQuery();
   return (
@@ -173,6 +187,9 @@ export function Page({ children }: { children?: React.ReactNode }) {
   );
 }
 
+/**
+ * MarkdownをHTMLに変換して表示するコンポーネント
+ */
 export function Md2Html(
   props:
     & { md: string }

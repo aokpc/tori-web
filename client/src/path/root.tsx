@@ -3,6 +3,9 @@ import { useEffect, useRef, useState } from "react";
 import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import { Halo, links, Md2Html, Page, root_contents } from "./base.tsx";
 
+/**
+ * ルートページのコンポーネント
+ */
 export function Root() {
   const [top, setTop] = useState(localStorage.getItem("visited") !== "true");
   useEffect(() => {
@@ -48,6 +51,14 @@ function Desc() {
   return (
     <Page>
       <Md2Html md={root_contents} />
+      <div className="center">
+        <a href="https://www.instagram.com/kaisei_birdman/">
+          <span className="instagram-logo"></span> @kaisei_birdman
+        </a>
+        <a href="https://x.com/kaisei_birdman">
+          <span className="x-logo"></span> @kaisei_birdman
+        </a>
+      </div>
     </Page>
   );
 }

@@ -1,7 +1,7 @@
 {
   "tasks": {
-    "dev": "deno run -A --node-modules-dir=auto npm:vite",
-    "build-": "deno run -A --node-modules-dir=auto npm:vite build && cp ./client/dist/index.html ./client/dist/404.html && echo 'kite-birdman.f5.si' > ./client/dist/CNAME",
+    "dev": "deno run -A --node-modules-dir=auto npm:vite@5.4.14",
+    "build": "deno run -A --node-modules-dir=auto npm:vite@5.4.14 build && cp ./client/dist/index.html ./client/dist/404.html && echo 'kite-birdman.f5.si' > ./client/dist/CNAME",
     "server:start": "deno run -A --node-modules-dir --watch ./dev-server/main.ts",
     "serve": "deno task build- && deno task server:start"
   },
