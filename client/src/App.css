@@ -1,3 +1,4 @@
+
 .app {
   width: 100vw;
   display: flex;
@@ -67,7 +68,7 @@ span.instagram-logo {
   background-image: url("/image/instagram_logo.png");
 }
 
-.center{
+.center {
   width: calc(var(--width) - 20px);
   display: flex;
   flex-direction: column;
@@ -76,10 +77,10 @@ span.instagram-logo {
   text-align: center;
   background-color: #0008;
 }
-.center a{
+.center a {
   color: #fff;
   text-decoration: none;
 }
-.center a:hover{
+.center a:hover {
   color: #fff;
 }

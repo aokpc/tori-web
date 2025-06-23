@@ -9,7 +9,7 @@ import "./base.css";
 import "./base-mobile.css";
 import { useMediaQuery } from "../media.ts";
 
-export * from "../contents.ts"
+export * from "../contents.ts";
 
 interface Link {
   url: string;
@@ -178,8 +178,30 @@ export function Halo({ links }: { links: Link[] }) {
  */
 export function Page({ children }: { children?: React.ReactNode }) {
   const isMobile = useMediaQuery();
+  const pageref = useRef<HTMLDivElement>(null);
+  useEffect(() => {
+    if (pageref.current) {
+      const updateScrollbarWidth = () => {
+        if (pageref.current) {
+          const scrollbarWidth = pageref.current.offsetWidth -
+            pageref.current.clientWidth;
+          document.documentElement.style.setProperty(
+            "--scrollbar-width",
+            `${scrollbarWidth}px`,
+          );
+        }
+      };
+
+      window.addEventListener("resize", updateScrollbarWidth);
+      updateScrollbarWidth();
+      return () => {
+        window.removeEventListener("resize", updateScrollbarWidth);
+      };
+    }
+  }, [children]);
+
   return (
-    <div className={isMobile ? "page-mobile" : "page"}>
+    <div className={isMobile ? "page-mobile" : "page"} ref={pageref}>
       <div className="page-content">
         {children}
       </div>
