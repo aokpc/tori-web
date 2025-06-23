@@ -1,0 +1,85 @@
+.app {
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+span.logo {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  background-repeat: no-repeat;
+  background-size: 40px;
+  background-position: center;
+  background-image: url("/image/logo.png");
+}
+
+button {
+  background-color: #6d99cb;
+  border: none;
+  color: white;
+  padding: 5px 5px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #5a8bb0;
+}
+button:active {
+  background-color: #4a7a9e;
+}
+button:focus {
+  outline: none;
+}
+
+.maintitle {
+  position: absolute;
+  font-size: 100px;
+  user-select: none;
+  -webkit-user-select: none;
+  color: #0000;
+}
+
+span.x-logo {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  background-repeat: no-repeat;
+  background-size: 18px;
+  background-position: center;
+  background-image: url("/image/x_logo_w.png");
+}
+
+span.instagram-logo {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  background-repeat: no-repeat;
+  background-size: 18px;
+  background-position: center;
+  background-image: url("/image/instagram_logo.png");
+}
+
+.center{
+  width: calc(var(--width) - 20px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  background-color: #0008;
+}
+.center a{
+  color: #fff;
+  text-decoration: none;
+}
+.center a:hover{
+  color: #fff;
+}

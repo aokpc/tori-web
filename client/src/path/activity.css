@@ -1,0 +1,49 @@
+.activity-contents{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.activity-contents-mobile{
+    display: flex;
+    flex-direction: column;
+    margin: 0 auto;
+    gap: 10px;
+}
+
+.activity-image{
+    width: 300px;
+}
+
+.activity{
+    width: 470px;
+    margin: 0px;
+    padding: 10px;
+    border: 0px solid #000;
+    border-radius: 10px;
+    background-color: #f0f0f0;
+}
+
+.activity-mobile{
+    margin: 5px;
+    margin: 0px;
+    padding: 10px;
+    border: 0px solid #000;
+    border-radius: 10px;
+    background-color: #f0f0f0;
+}
+
+.activity h2{
+    font-size: 23px;
+    font-weight: bold;
+    margin: 10px 0px;
+    overflow-wrap: normal;
+}
+.activity-mobile h2{
+    font-size: 20px;
+    font-weight: bold;
+    margin: 10px 0px;
+    overflow-wrap: normal;
+
+}

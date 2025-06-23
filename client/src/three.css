@@ -1,0 +1,12 @@
+.three {
+  width: 990px;
+  height: calc(100vh - 300px);
+  display: block;
+  margin: 0 auto 0 auto;
+}
+
+.three-mobile {
+  width: calc(100vw - 20px);
+  height: calc(100vh - 300px);
+  display: block;
+}

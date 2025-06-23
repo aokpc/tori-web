@@ -1,0 +1,207 @@
+.page {
+  position: absolute;
+  top: 65px;
+  align-items: baseline;
+  justify-content: baseline;
+  display: flex;
+  flex-direction: column;
+  width: 1015px;
+  --width: 1015px;
+  height: calc(100vh - 65px);
+  background-color: #fff;
+  color: #000;
+  overflow-y: scroll;
+}
+
+
+
+div.page-content {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  font-size: 18px;
+}
+
+.page-content h1 {
+  font-size: 35px;
+  font-weight: bold;
+  text-align: center;
+  color: #19006e;
+}
+
+.page-content h2 {
+  font-size: 28px;
+  font-weight: 600;
+  margin: 15px 0;
+  color: #000;
+  border-bottom: 2px solid #19006e;
+  padding-bottom: 5px;
+  position: relative; /* 修飾のため位置を調整 */
+  padding-left: 10px; /* 左に余白を追加して文字を移動 */
+}
+
+.page-content h2::before {
+  content: "";
+  position: absolute;
+  left: 0; /* 線をh2の内側に配置 */
+  top: 0;
+  bottom: 0;
+  width: 5px; /* 線の幅 */
+  background-color: #19006e; /* 線の色 */
+}
+
+.page-content h3 {
+  font-size: 24px;
+  font-weight: 600;
+  margin: 10px 0;
+}
+
+.page-content p {
+  white-space: pre-line;
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+
+}
+
+.page-content h1, .page-content h2, .page-content h3 {
+  position: relative; /* ホバー効果のため位置を調整 */
+  overflow: hidden; /* グラデーションがはみ出ないようにする */
+}
+
+.page-content h1::after, .page-content h2::after, .page-content h3::after {
+  content: "";
+  position: absolute;
+  top: 50%; /* 中央に配置 */
+  left: 150%; /* 初期位置を右端の外側に設定 */
+  width: 300%; /* グラデーションの幅を広げる */
+  height: 300%; /* グラデーションの高さを広げる */
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.6), transparent); /* 光り方を弱くするため透明度を調整 */
+  opacity: 0; /* 初期状態で透明に設定 */
+  transition: transform 3s ease, opacity 0s ease; /* 移動と透明度の変化をスムーズにする */
+  transform: translate(-50%, -50%) scale(0); /* 初期状態で縮小 */
+  pointer-events: none; /* ホバー時の干渉を防ぐ */
+}
+
+.page-content h1:hover::after, .page-content h2:hover::after, .page-content h3:hover::after {
+  transform: translate(-150%, -50%) scale(1); /* ホバー時に左端へ移動 */
+  opacity: 1; /* ホバー時に表示 */
+}
+
+.animation-h1 {
+  display: block; /* ブロック要素として表示 */
+  min-height: 100px;
+  position: relative; /* アニメーション効果のため位置を調整 */
+  overflow: hidden; /* グラデーションがはみ出ないようにする */
+  font-size: 35px; /* フォントサイズを調整 */
+  font-weight: bold; /* フォントの太さを調整 */
+  text-align: center; /* テキストを中央揃え */
+  color: #19006e; /* テキストの色を設定 */
+}
+
+.animation-h1::after {
+  content: "";
+  position: absolute;
+  top: 50%; /* 中央に配置 */
+  left: 150%; /* 初期位置を右端の外側に設定 */
+  width: 300%; /* グラデーションの幅を広げる */
+  height: 300%; /* グラデーションの高さを広げる */
+  background: radial-gradient(circle, rgba(255, 255, 255, 0.6), transparent); /* 光り方を弱くするため透明度を調整 */
+  opacity: 1; /* 常時表示 */
+  animation: moveGradient 3s infinite ease-in-out; /* グラデーションの移動を繰り返すアニメーション */
+  transform: translate(-150%, -50%) scale(1); /* 初期状態で拡大 */
+  pointer-events: none; /* 干渉を防ぐ */
+}
+
+@keyframes moveGradient {
+  0% {
+    transform: translate(-150%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+  100% {
+    transform: translate(-150%, -50%) scale(1);
+  }
+}
+
+@keyframes moveGradient {
+  0% {
+    transform: translate(-150%, -50%) scale(1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+  }
+  100% {
+    transform: translate(-150%, -50%) scale(1);
+  }
+}
+
+.halo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  height: 65px;
+  overflow: hidden;
+  background-color: #19006e;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.halo-content {
+  margin: 5px;
+  display: flex;
+  flex-direction: row;
+}
+
+.halo-content .title {
+  position: relative;
+  bottom: 5px;
+  font-size: 35px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.halo-content .title .kite {
+  position: absolute;
+  bottom: -5px;
+  left: 5px;
+  font-size: 10px;
+  color: #fff;
+}
+
+.halo-content .link {
+  margin-top: 20px;
+  font-size: 20px;
+  color: #fff;
+  cursor: pointer;
+}
+
+.halo-content .link {
+  position: relative;
+}
+.halo-content .link::before {
+  background: #fff;
+  content: "";
+  width: 100%;
+  height: 2px;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  transform-origin: center top;
+  transform: scale(0, 1);
+  transition: transform 0.3s;
+}
+.halo-content .link:hover::before {
+  transform-origin: center top;
+  transform: scale(1, 1);
+}
+
+.halo-content .link.current::before {
+  transition: transform 0s;
+  transform-origin: center top;
+  transform: scale(1, 1);
+}
