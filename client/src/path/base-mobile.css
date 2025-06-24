@@ -1,3 +1,4 @@
+/* スマホ用のページ全体のスタイル */
 .page-mobile {
   position: absolute;
   top: 65px;
@@ -13,35 +14,39 @@
   overflow-y: scroll;
 }
 
+/* スライドメニューのスタイル */
 .slide-menu {
   position: fixed;
   top: 0;
   right: 0;
   height: 100%;
   width: 250px;
-  background-color: #0008;
-  backdrop-filter: blur(12px);
+  background-color: #0008; /* 背景色と透明度 */
+  backdrop-filter: blur(12px); /* 背景のぼかし効果 */
   color: #fff;
-  transform: translateX(100%);
-  transition: transform 0.3s ease-in-out;
-  z-index: 1000;
+  transform: translateX(100%); /* 初期状態で画面外に配置 */
+  transition: transform 0.3s ease-in-out; /* スライドアニメーション */
+  z-index: 1000; /* 他の要素より前面に表示 */
 }
 
+/* スライドメニューが開いた状態のスタイル */
 .slide-menu.open {
-  transform: translateX(0);
+  transform: translateX(0); /* 画面内に表示 */
 }
 
+/* メニューボタンのスタイル */
 .menu-button {
   position: absolute;
   right: 0;
   margin-left: auto;
   color: #fff;
-  background-color: #19006e;
+  background-color: #19006e; /* ボタンの背景色 */
   border: none;
   cursor: pointer;
   height: 65px;
 }
 
+/* メニューリンクのコンテナスタイル */
 .menu-links {
   margin-top: 0px;
   display: flex;
@@ -49,26 +54,16 @@
   padding: 10px;
 }
 
+/* 個々のメニューリンクのスタイル */
 .menu-link {
   padding: 10px 15px;
-  text-decoration: none;
+  text-decoration: none; /* 下線を削除 */
   color: #fff;
   cursor: pointer;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s; /* 背景色のホバー効果 */
 }
 
+/* メニューリンクのホバー時のスタイル */
 .menu-link:hover {
-  background-color: #555;
-}
-
-.menu-link {
-  padding: 10px 15px;
-  text-decoration: none;
-  color: #fff;
-  cursor: pointer;
-  transition: background-color 0.2s;
-}
-
-.menu-link:hover {
-  background-color: #555;
+  background-color: #555; /* ホバー時の背景色 */
 }

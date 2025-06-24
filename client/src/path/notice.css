@@ -1,35 +1,43 @@
+/* お知らせコンポーネントのスタイル */
 .notice {
-  background-color: #fff;
-  border-top: 1px solid #000;
-  border-bottom: 1px solid #000;
-  margin-bottom: -1px;
-  color: #000;
-  padding: 8px;
-  width: calc(var(--width) - 40px);
-  display: flex;
-  flex-direction: column;
-  font-size: 17px;
-  text-shadow: none;
+  background-color: #fff; /* 背景色を白に設定 */
+  border-top: 1px solid #000; /* 上部の境界線 */
+  border-bottom: 1px solid #000; /* 下部の境界線 */
+  margin-bottom: -1px; /* 下部のマージンを調整 */
+  color: #000; /* テキストカラーを黒に設定 */
+  padding: 8px; /* 内側の余白を設定 */
+  width: calc(var(--width) - 40px); /* 幅を計算して設定 */
+  display: flex; /* フレックスボックスを使用 */
+  flex-direction: column; /* 垂直方向に配置 */
+  font-size: 17px; /* フォントサイズを設定 */
+  text-shadow: none; /* テキストの影を無効化 */
 }
 
+/* お知らせのタイトルのスタイル */
 .notice .head .title {
-  display: inline-block;
-  font-weight: 700;
+  display: inline-block; /* インラインブロック要素として表示 */
+  font-weight: 700; /* フォントの太さを設定 */
 }
+
+/* 重要なお知らせのタイトルのスタイル */
 .notice .head .title.important {
-  color: #f00;
-  display: inline-block;
-  font-weight: 700;
+  color: #f00; /* テキストカラーを赤に設定 */
+  display: inline-block; /* インラインブロック要素として表示 */
+  font-weight: 700; /* フォントの太さを設定 */
 }
+
+/* 日付のスタイル */
 .notice .head .date {
-  display: inline-block;
-  width: 120px;
+  display: inline-block; /* インラインブロック要素として表示 */
+  width: 120px; /* 幅を設定 */
 }
 
+/* コンテンツのスタイル */
 .notice .content {
-  margin-left: 120px;
+  margin-left: 120px; /* 左側のマージンを設定 */
 }
 
+/* 段落のスタイル */
 .notice p {
-  font-size: 17px;
+  font-size: 17px; /* フォントサイズを設定 */
 }

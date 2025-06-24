@@ -53,12 +53,12 @@ export function GLBViewer({ src }: { src?: string | null }) {
     light2.position.set(-5, -5, 5);
     scene.add(light2);
 
-    const loader = new GLTFLoader() as any;
+    const loader = new GLTFLoader(); // `any`型を削除
     loader.load(
       src,
-      (gltf: any) => {
+      (gltf) => { // `any`型を削除
         const model = gltf.scene;
-        gltf.scene.traverse((child: any) => {
+        gltf.scene.traverse((child) => {
           if (child instanceof THREE.Mesh) {
             const mat = child.material;
             if (mat.transmission) {
@@ -77,7 +77,7 @@ export function GLBViewer({ src }: { src?: string | null }) {
         isChanged = true;
       },
       undefined,
-      (error: any) => {
+      (error) => {
         console.error("Error loading GLB file:", error);
       },
     );
@@ -86,12 +86,20 @@ export function GLBViewer({ src }: { src?: string | null }) {
     let lastY = 0;
     let isDragging = false;
 
+    /**
+     * マウス押下時の処理
+     * ドラッグ操作を開始し、現在のマウス位置を記録します。
+     */
     const onMouseDown = (e: MouseEvent) => {
       isDragging = true;
       lastX = e.clientX;
       lastY = e.clientY;
     };
 
+    /**
+     * マウス移動時の処理
+     * ドラッグ中にモデルの回転を更新します。
+     */
     const onMouseMove = (e: MouseEvent) => {
       if (!isDragging || !modelRef.current) return;
       const deltaX = e.clientX - lastX;
@@ -99,24 +107,36 @@ export function GLBViewer({ src }: { src?: string | null }) {
       lastX = e.clientX;
       lastY = e.clientY;
 
-      modelRef.current.rotation.y += deltaX * 0.01;
-      modelRef.current.rotation.x += deltaY * 0.01;
+      modelRef.current.rotation.y += deltaX * 0.01; // Y軸回転
+      modelRef.current.rotation.x += deltaY * 0.01; // X軸回転
       isChanged = true;
     };
 
+    /**
+     * マウスを離した時の処理
+     * ドラッグ操作を終了します。
+     */
     const onMouseUp = () => {
       isDragging = false;
     };
 
+    /**
+     * マウスホイール操作時の処理
+     * モデルのスケールを更新します。
+     */
     const onMouseWheel = (e: WheelEvent) => {
       e.preventDefault();
       if (!modelRef.current) return;
       const scale = modelRef.current.scale.x * (1 + e.deltaY * 0.005);
-      if (scale <= 1) return;
+      if (scale <= 1) return; // スケールが1以下にならないように制限
       modelRef.current.scale.set(scale, scale, scale);
       isChanged = true;
     };
 
+    /**
+     * タッチ開始時の処理
+     * タッチ操作を開始し、現在のタッチ位置を記録します。
+     */
     const onTouchStart = (e: TouchEvent) => {
       for (const touch of e.touches) {
         lastX = touch.clientX;
@@ -141,7 +161,7 @@ export function GLBViewer({ src }: { src?: string | null }) {
     };
 
     const onHashChange = () => {
-      const hash = window.location.hash;
+      const hash = globalThis.location.hash; // `window`を`globalThis`に変更
       if (!hash) return;
       if (!modelRef.current) return;
       const param = new URLSearchParams(hash.slice(1));
@@ -162,7 +182,7 @@ export function GLBViewer({ src }: { src?: string | null }) {
       }
     };
 
-    window.addEventListener("hashchange", onHashChange);
+    globalThis.addEventListener("hashchange", onHashChange); // `window`を`globalThis`に変更
 
     canvasRef.current.addEventListener("mousedown", onMouseDown);
     canvasRef.current.addEventListener("mousemove", onMouseMove);
@@ -189,7 +209,7 @@ export function GLBViewer({ src }: { src?: string | null }) {
       modelRef.current.rotation.y = modelRef.current.rotation.y % (Math.PI * 2);
       renderer.render(scene, camera);
       isChanged = false;
-      location.hash = `#x=${
+      globalThis.location.hash = `#x=${
         (modelRef.current.rotation.x ?? 0) / Math.PI * 180
       }&y=${(modelRef.current.rotation.y ?? 0) / Math.PI * 180}&s=${
         modelRef.current.scale.x ?? 1
@@ -208,7 +228,7 @@ export function GLBViewer({ src }: { src?: string | null }) {
       canvasRef.current?.removeEventListener("touchmove", onTouchMove);
       canvasRef.current?.removeEventListener("touchend", onTouchEnd);
       canvasRef.current?.removeEventListener("touchcancel", onTouchEnd);
-      window.removeEventListener("hashchange", onHashChange);
+      globalThis.removeEventListener("hashchange", onHashChange); // `window`を`globalThis`に変更
       renderer.dispose();
     };
   }, [src]);
@@ -320,12 +340,20 @@ export function STLViewer({ src }: { src: string }) {
     let lastY = 0;
     let isDragging = false;
 
+    /**
+     * マウス押下時の処理
+     * ドラッグ操作を開始し、現在のマウス位置を記録します。
+     */
     const onMouseDown = (e: MouseEvent) => {
       isDragging = true;
       lastX = e.clientX;
       lastY = e.clientY;
     };
 
+    /**
+     * マウス移動時の処理
+     * ドラッグ中にモデルの回転を更新します。
+     */
     const onMouseMove = (e: MouseEvent) => {
       if (!isDragging || !meshRef.current) return;
       const deltaX = e.clientX - lastX;
@@ -337,6 +365,10 @@ export function STLViewer({ src }: { src: string }) {
       meshRef.current.rotation.x += deltaY * 0.01;
     };
 
+    /**
+     * マウスを離した時の処理
+     * ドラッグ操作を終了します。
+     */
     const onMouseUp = () => {
       isDragging = false;
     };

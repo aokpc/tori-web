@@ -1,49 +1,52 @@
-.activity-contents{
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
-    gap: 10px;
+/*
+ * 活動報告ページのスタイル
+ * PCとモバイルで異なるレイアウトを提供
+ */
+.activity-contents {
+  display: flex; /* フレックスボックスでレイアウト */
+  flex-direction: row; /* 横並び */
+  flex-wrap: wrap; /* 要素を折り返し */
+  gap: 10px; /* 要素間の間隔 */
 }
 
-.activity-contents-mobile{
-    display: flex;
-    flex-direction: column;
-    margin: 0 auto;
-    gap: 10px;
+.activity-contents-mobile {
+  display: flex; /* フレックスボックスでレイアウト */
+  flex-direction: column; /* 縦並び */
+  margin: 0 auto; /* 中央寄せ */
+  gap: 10px; /* 要素間の間隔 */
 }
 
-.activity-image{
-    width: 300px;
+.activity-image {
+  width: 300px; /* 画像の幅を固定 */
 }
 
-.activity{
-    width: 470px;
-    margin: 0px;
-    padding: 10px;
-    border: 0px solid #000;
-    border-radius: 10px;
-    background-color: #f0f0f0;
+.activity {
+  width: 470px; /* コンテンツの幅を固定 */
+  margin: 0px; /* 外側の余白を削除 */
+  padding: 10px; /* 内側の余白を追加 */
+  border: 0px solid #000; /* 枠線を削除 */
+  border-radius: 10px; /* 角を丸くする */
+  background-color: #f0f0f0; /* 背景色を設定 */
 }
 
-.activity-mobile{
-    margin: 5px;
-    margin: 0px;
-    padding: 10px;
-    border: 0px solid #000;
-    border-radius: 10px;
-    background-color: #f0f0f0;
+.activity-mobile {
+  margin: 5px; /* 外側の余白を設定 */
+  padding: 10px; /* 内側の余白を追加 */
+  border: 0px solid #000; /* 枠線を削除 */
+  border-radius: 10px; /* 角を丸くする */
+  background-color: #f0f0f0; /* 背景色を設定 */
 }
 
-.activity h2{
-    font-size: 23px;
-    font-weight: bold;
-    margin: 10px 0px;
-    overflow-wrap: normal;
+.activity h2 {
+  font-size: 23px; /* フォントサイズを設定 */
+  font-weight: bold; /* フォントを太字に設定 */
+  margin: 10px 0px; /* 上下の余白を設定 */
+  overflow-wrap: normal; /* テキストの折り返しを設定 */
 }
-.activity-mobile h2{
-    font-size: 20px;
-    font-weight: bold;
-    margin: 10px 0px;
-    overflow-wrap: normal;
 
+.activity-mobile h2 {
+  font-size: 20px; /* フォントサイズを設定 */
+  font-weight: bold; /* フォントを太字に設定 */
+  margin: 10px 0px; /* 上下の余白を設定 */
+  overflow-wrap: normal; /* テキストの折り返しを設定 */
 }

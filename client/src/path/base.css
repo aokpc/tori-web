@@ -1,3 +1,4 @@
+/* PC用のページ全体のスタイル */
 .page {
   position: absolute;
   top: 65px;
@@ -5,40 +6,43 @@
   justify-content: baseline;
   display: flex;
   flex-direction: column;
-  width: 1015px;
-  --width: calc(1015px - var(--scrollbar-width));
-  height: calc(100vh - 65px);
-  background-color: #fff;
-  color: #000;
-  overflow-y: scroll;
+  width: 1015px; /* 固定幅 */
+  --width: calc(1015px - var(--scrollbar-width)); /* スクロールバーを考慮した幅 */
+  height: calc(100vh - 65px); /* ヘッダーを除いた高さ */
+  background-color: #fff; /* 背景色 */
+  color: #000; /* テキスト色 */
+  overflow-y: scroll; /* 垂直スクロールを許可 */
 }
 
-
+/* ページコンテンツのスタイル */
 div.page-content {
-  padding: 10px;
+  padding: 10px; /* 内側の余白 */
   display: flex;
-  flex-direction: column;
-  font-size: 18px;
+  flex-direction: column; /* 縦方向に配置 */
+  font-size: 18px; /* フォントサイズ */
 }
 
+/* h1要素のスタイル */
 .page-content h1 {
-  font-size: 35px;
-  font-weight: bold;
-  text-align: center;
-  color: #19006e;
+  font-size: 35px; /* フォントサイズ */
+  font-weight: bold; /* 太字 */
+  text-align: center; /* 中央揃え */
+  color: #19006e; /* テキスト色 */
 }
 
+/* h2要素のスタイル */
 .page-content h2 {
-  font-size: 28px;
-  font-weight: 600;
-  margin: 15px 0;
-  color: #000;
-  border-bottom: 2px solid #19006e;
-  padding-bottom: 5px;
+  font-size: 28px; /* フォントサイズ */
+  font-weight: 600; /* 太字 */
+  margin: 15px 0; /* 上下の余白 */
+  color: #000; /* テキスト色 */
+  border-bottom: 2px solid #19006e; /* 下線 */
+  padding-bottom: 5px; /* 下部の余白 */
   position: relative; /* 修飾のため位置を調整 */
   padding-left: 10px; /* 左に余白を追加して文字を移動 */
 }
 
+/* h2要素の左側の線 */
 .page-content h2::before {
   content: "";
   position: absolute;
@@ -49,25 +53,28 @@ div.page-content {
   background-color: #19006e; /* 線の色 */
 }
 
+/* h3要素のスタイル */
 .page-content h3 {
-  font-size: 24px;
-  font-weight: 600;
-  margin: 10px 0;
+  font-size: 24px; /* フォントサイズ */
+  font-weight: 600; /* 太字 */
+  margin: 10px 0; /* 上下の余白 */
 }
 
+/* 段落のスタイル */
 .page-content p {
-  white-space: pre-line;
-  margin: 0;
-  font-size: 18px;
-  font-weight: 600;
-
+  white-space: pre-line; /* 改行を保持 */
+  margin: 0; /* 余白なし */
+  font-size: 18px; /* フォントサイズ */
+  font-weight: 600; /* 太字 */
 }
 
+/* h1, h2, h3要素のホバー効果 */
 .page-content h1, .page-content h2, .page-content h3 {
   position: relative; /* ホバー効果のため位置を調整 */
   overflow: hidden; /* グラデーションがはみ出ないようにする */
 }
 
+/* ホバー時のグラデーション効果 */
 .page-content h1::after, .page-content h2::after, .page-content h3::after {
   content: "";
   position: absolute;
@@ -82,22 +89,25 @@ div.page-content {
   pointer-events: none; /* ホバー時の干渉を防ぐ */
 }
 
+/* ホバー時のグラデーション表示 */
 .page-content h1:hover::after, .page-content h2:hover::after, .page-content h3:hover::after {
   transform: translate(-150%, -50%) scale(1); /* ホバー時に左端へ移動 */
   opacity: 1; /* ホバー時に表示 */
 }
 
+/* アニメーション付きh1要素のスタイル */
 .animation-h1 {
   display: block; /* ブロック要素として表示 */
-  min-height: 100px;
+  min-height: 100px; /* 最小高さ */
   position: relative; /* アニメーション効果のため位置を調整 */
   overflow: hidden; /* グラデーションがはみ出ないようにする */
-  font-size: 35px; /* フォントサイズを調整 */
+  font-size: 35px; /* フォントサイズ */
   font-weight: bold; /* フォントの太さを調整 */
   text-align: center; /* テキストを中央揃え */
   color: #19006e; /* テキストの色を設定 */
 }
 
+/* アニメーション効果の設定 */
 .animation-h1::after {
   content: "";
   position: absolute;
@@ -112,6 +122,7 @@ div.page-content {
   pointer-events: none; /* 干渉を防ぐ */
 }
 
+/* グラデーション移動のアニメーション */
 @keyframes moveGradient {
   0% {
     transform: translate(-150%, -50%) scale(1);
@@ -124,83 +135,78 @@ div.page-content {
   }
 }
 
-@keyframes moveGradient {
-  0% {
-    transform: translate(-150%, -50%) scale(1);
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1.2);
-  }
-  100% {
-    transform: translate(-150%, -50%) scale(1);
-  }
-}
-
+/* ヘッダーのスタイル */
 .halo {
   position: absolute;
   top: 0;
   left: 0;
   display: flex;
-  flex-direction: row;
-  width: 100%;
-  height: 65px;
-  overflow: hidden;
-  background-color: #19006e;
-  user-select: none;
-  -webkit-user-select: none;
+  flex-direction: row; /* 横方向に配置 */
+  width: 100%; /* 幅を100%に設定 */
+  height: 65px; /* 高さを固定 */
+  overflow: hidden; /* はみ出しを隠す */
+  background-color: #19006e; /* 背景色 */
+  user-select: none; /* テキスト選択を無効化 */
+  -webkit-user-select: none; /* Webkitブラウザ用の選択無効化 */
 }
 
+/* ヘッダーコンテンツのスタイル */
 .halo-content {
-  margin: 5px;
+  margin: 5px; /* 外側の余白 */
   display: flex;
-  flex-direction: row;
+  flex-direction: row; /* 横方向に配置 */
 }
 
+/* ヘッダーのタイトルスタイル */
 .halo-content .title {
   position: relative;
-  bottom: 5px;
-  font-size: 35px;
-  font-weight: 700;
-  color: #fff;
+  bottom: 5px; /* 下に移動 */
+  font-size: 35px; /* フォントサイズ */
+  font-weight: 700; /* 太字 */
+  color: #fff; /* テキスト色 */
 }
 
+/* タイトル内のサブテキストスタイル */
 .halo-content .title .kite {
   position: absolute;
-  bottom: -5px;
-  left: 5px;
-  font-size: 10px;
-  color: #fff;
+  bottom: -5px; /* 下に移動 */
+  left: 5px; /* 左に移動 */
+  font-size: 10px; /* フォントサイズ */
+  color: #fff; /* テキスト色 */
 }
 
+/* ヘッダーリンクのスタイル */
 .halo-content .link {
-  margin-top: 20px;
-  font-size: 20px;
-  color: #fff;
-  cursor: pointer;
+  margin-top: 20px; /* 上部の余白 */
+  font-size: 20px; /* フォントサイズ */
+  color: #fff; /* テキスト色 */
+  cursor: pointer; /* カーソルをポインターに変更 */
 }
 
+/* ヘッダーリンクのホバー効果 */
 .halo-content .link {
   position: relative;
 }
 .halo-content .link::before {
-  background: #fff;
+  background: #fff; /* 背景色 */
   content: "";
-  width: 100%;
-  height: 2px;
+  width: 100%; /* 幅を100%に設定 */
+  height: 2px; /* 高さを固定 */
   position: absolute;
   left: 0;
   bottom: 0;
-  transform-origin: center top;
-  transform: scale(0, 1);
-  transition: transform 0.3s;
+  transform-origin: center top; /* 変形の基点を設定 */
+  transform: scale(0, 1); /* 初期状態で縮小 */
+  transition: transform 0.3s; /* 変形のアニメーション */
 }
 .halo-content .link:hover::before {
-  transform-origin: center top;
-  transform: scale(1, 1);
+  transform-origin: center top; /* 変形の基点を設定 */
+  transform: scale(1, 1); /* ホバー時に拡大 */
 }
 
+/* 現在のリンクのスタイル */
 .halo-content .link.current::before {
-  transition: transform 0s;
-  transform-origin: center top;
-  transform: scale(1, 1);
+  transition: transform 0s; /* アニメーションなし */
+  transform-origin: center top; /* 変形の基点を設定 */
+  transform: scale(1, 1); /* 拡大状態 */
 }

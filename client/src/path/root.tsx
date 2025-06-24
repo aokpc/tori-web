@@ -4,30 +4,41 @@ import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import { Halo, links, Md2Html, Page, root_contents } from "./base.tsx";
 
 import "./root.css";
+
 /**
  * ルートページのコンポーネント
+ * 初回訪問時にトップ画面を表示し、その後メインコンテンツを表示します。
  */
 export function Root() {
   const [top, setTop] = useState(
     /*localStorage.getItem("visited") !== "true"*/ false,
   );
   useEffect(() => {
+    // 2秒後にトップ画面を非表示にする
     setTimeout(() => setTop(false), 2000);
   });
   return (
     <>
+      {/* 初回訪問時にトップ画面を表示 */}
       {top ? <Top /> : null}
+      {/* メインコンテンツを表示 */}
       <Body />
     </>
   );
 }
 
+/**
+ * トップ画面のコンポーネント
+ * 初回訪問時にフェードアウトアニメーションを表示します。
+ */
 function Top() {
   const topRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
+    // 訪問済みフラグをローカルストレージに保存
     localStorage.setItem("visited", "true");
     setTimeout(() => {
       if (topRef.current) {
+        // フェードアウトアニメーションを適用
         topRef.current.classList.add("fade-out");
       }
     }, 1000);
@@ -116,6 +127,10 @@ function Top() {
   );
 }
 
+/**
+ * メインコンテンツのコンポーネント
+ * 説明文とリンクを表示します。
+ */
 function Body() {
   return (
     <>
@@ -127,6 +142,10 @@ function Body() {
   );
 }
 
+/**
+ * 説明文のコンポーネント
+ * ウェブサイトの概要を表示します。
+ */
 function Desc() {
   return (
     <Page>
@@ -135,15 +154,16 @@ function Desc() {
       <Md2Html md={root_contents} />
       {
         /*
-      <div className="center">
-        <a href="https://www.instagram.com/kaisei_birdman/">
-          <span className="instagram-logo"></span> @kaisei_birdman
-        </a>
-        <a href="https://x.com/kaisei_birdman">
-          <span className="x-logo"></span> @kaisei_birdman
-        </a>
-      </div>
-      */
+        ソーシャルメディアリンクを表示する場合は以下を有効化
+        <div className="center">
+          <a href="https://www.instagram.com/kaisei_birdman/">
+            <span className="instagram-logo"></span> @kaisei_birdman
+          </a>
+          <a href="https://x.com/kaisei_birdman">
+            <span className="x-logo"></span> @kaisei_birdman
+          </a>
+        </div>
+        */
       }
     </Page>
   );

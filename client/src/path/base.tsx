@@ -11,13 +11,18 @@ import { useMediaQuery } from "../media.ts";
 
 export * from "../contents.ts";
 
+/**
+ * リンクの型定義
+ */
 interface Link {
-  url: string;
-  name: string;
+  url: string; // リンクのURL
+  name: string; // リンクの名前
 }
 
 /**
- * スライドメニューを定義
+ * スライドメニューコンポーネント
+ * @param links - メニュー内のリンク一覧
+ * @param op - メニューの開閉状態
  */
 const SlideMenu: React.FC<
   {
@@ -27,7 +32,8 @@ const SlideMenu: React.FC<
 > = ({ links, op: [isOpen, setIsOpen] }) => {
   const navigate = useNavigate();
   const menuRef = useRef<HTMLDivElement>(null);
-  const toggleMenu = () => setIsOpen(!isOpen);
+
+  // メニュー外をクリックした際に閉じる処理
   const handleClickOutside = (event: MouseEvent) => {
     if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
       setIsOpen(false);
@@ -44,6 +50,7 @@ const SlideMenu: React.FC<
       document.removeEventListener("mousedown", handleClickOutside);
     };
   }, [isOpen]);
+
   return (
     <div
       ref={menuRef}
@@ -84,14 +91,14 @@ const SlideMenu: React.FC<
 };
 
 /**
- * ヘッダーのコンポーネント
- * スマホとPCで表示が変わる
- * スマホではスライドメニューを使用
+ * ヘッダーコンポーネント
+ * @param links - ヘッダー内のリンク一覧
  */
 export function Halo({ links }: { links: Link[] }) {
-  const isMobile = useMediaQuery();
+  const isMobile = useMediaQuery(); // モバイル判定
   const navigate = useNavigate();
-  const op = useState(false);
+  const op = useState(false); // メニューの開閉状態
+
   if (isMobile) {
     return (
       <div className="halo">
@@ -174,11 +181,13 @@ export function Halo({ links }: { links: Link[] }) {
 }
 
 /**
- * ページ部分のコンポーネント
+ * ページコンポーネント
+ * @param children - ページ内のコンテンツ
  */
 export function Page({ children }: { children?: React.ReactNode }) {
-  const isMobile = useMediaQuery();
+  const isMobile = useMediaQuery(); // モバイル判定
   const pageref = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     if (pageref.current) {
       const updateScrollbarWidth = () => {
@@ -211,10 +220,11 @@ export function Page({ children }: { children?: React.ReactNode }) {
 
 /**
  * MarkdownをHTMLに変換して表示するコンポーネント
+ * @param props - Markdown文字列とHTML属性
  */
 export function Md2Html(
   props:
-    & { md: string }
+    & { md: string } // Markdown文字列
     & React.DetailedHTMLProps<
       React.HTMLAttributes<HTMLDivElement>,
       HTMLDivElement
@@ -222,6 +232,7 @@ export function Md2Html(
 ): JSX.Element {
   const { md } = props;
   const n = useRef<HTMLDivElement>(null);
+
   useEffect(() => {
     const html = marked.parse(md);
     if (typeof html === "object") {
@@ -236,5 +247,6 @@ export function Md2Html(
       }
     }
   }, [md]);
+
   return <div ref={n} {...{ ...props, md: undefined }} />;
 }
