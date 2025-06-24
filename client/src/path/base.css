@@ -17,6 +17,7 @@
 /* ページコンテンツのスタイル */
 div.page-content {
   padding: 10px; /* 内側の余白 */
+  min-height:  calc(100vh - 85px);;
   display: flex;
   flex-direction: column; /* 縦方向に配置 */
   font-size: 18px; /* フォントサイズ */
@@ -63,6 +64,13 @@ div.page-content {
 /* 段落のスタイル */
 .page-content p {
   white-space: pre-line; /* 改行を保持 */
+  margin: 0; /* 余白なし */
+  font-size: 18px; /* フォントサイズ */
+  font-weight: 600; /* 太字 */
+}
+
+/* 段落のスタイル */
+.page-content a {
   margin: 0; /* 余白なし */
   font-size: 18px; /* フォントサイズ */
   font-weight: 600; /* 太字 */

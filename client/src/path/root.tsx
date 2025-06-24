@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useRef, useState } from "react";
-import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
+import { BrowserRouter, Link, Route, Routes, useNavigate } from "react-router-dom";
 import { Halo, links, Md2Html, Page, root_contents } from "./base.tsx";
 
 import "./root.css";
@@ -165,6 +165,19 @@ function Desc() {
         </div>
         */
       }
+
+      <div className="bottom">
+        <div className="center"><Link to="/notice">{">>>お知らせを見る"}</Link></div>
+      </div>
+      <div className="center">
+        <a href="https://www.instagram.com/kaisei_birdman/">
+          <span className="instagram-logo"></span> kaisei_birdman
+        </a>
+        <a href="https://x.com/kaisei_birdman">
+          <span className="x-logo"></span> kaisei_birdman
+        </a>
+      </div>
+      <br />
     </Page>
   );
 }

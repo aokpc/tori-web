@@ -1,6 +1,12 @@
 import React from "react";
 import { useEffect, useRef, useState } from "react";
-import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
+import {
+  BrowserRouter,
+  Link,
+  Route,
+  Routes,
+  useNavigate,
+} from "react-router-dom";
 import {
   activity,
   ActivityContent,
@@ -27,7 +33,12 @@ export function Activity() {
       <Page>
         <h1>活動報告</h1>
         <Contents activity={activity} // 活動報告の内容を表示
-        /> 
+        />
+        <div className="bottom">
+          <div className="center">
+            <Link to="/design">{">>>機体設計を見る"}</Link>
+          </div>
+        </div>
       </Page>
     </>
   );
@@ -47,7 +58,9 @@ function Contents({ activity }: { activity: ActivityContent[] }) {
   }
 
   return (
-    <div className={isMobile ? "activity-contents-mobile" : "activity-contents"}>
+    <div
+      className={isMobile ? "activity-contents-mobile" : "activity-contents"}
+    >
       {activity.map((content, i) =>
         content.image
           ? (
@@ -58,13 +71,16 @@ function Contents({ activity }: { activity: ActivityContent[] }) {
                 alt={content.title} // 画像の代替テキスト
                 className="activity-image"
               />
-              <Md2Html md={content.content} /* MarkdownをHTMLに変換して表示 */ />
+              <Md2Html
+                md={content.content} /* MarkdownをHTMLに変換して表示 */
+              />
             </div>
           )
           : (
             <div className={className} key={i}>
               <h2>{content.title}</h2>
-              <Md2Html md={content.content} /> {/* MarkdownをHTMLに変換して表示 */}
+              <Md2Html md={content.content} />{" "}
+              {/* MarkdownをHTMLに変換して表示 */}
             </div>
           )
       )}

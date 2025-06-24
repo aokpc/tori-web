@@ -3,7 +3,13 @@
  */
 import React from "react";
 import { useEffect, useRef, useState } from "react";
-import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
+import {
+  BrowserRouter,
+  Link,
+  Route,
+  Routes,
+  useNavigate,
+} from "react-router-dom";
 import { Halo, links, Page } from "./base.tsx";
 
 import "./contact.css";
@@ -146,6 +152,11 @@ export function Contacts() {
           {/* 成功メッセージ表示 */}
           {success && <p className="contact-success">送信が完了しました。</p>}
         </form>
+        <div className="bottom">
+          <div className="center">
+            <Link to="/">{">>>ホームに戻る"}</Link>
+          </div>
+        </div>
       </Page>
     </>
   );

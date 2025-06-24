@@ -1,6 +1,6 @@
 import React from "react";
 import { useEffect, useRef, useState } from "react";
-import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
+import { BrowserRouter, Link, Route, Routes, useNavigate } from "react-router-dom";
 import { Halo, links, Md2Html, notice, NoticeContent, Page } from "./base.tsx";
 
 import "./notice.css";
@@ -20,6 +20,11 @@ export function Notice() {
       <Page>
         <h1>お知らせ</h1>
         <Content contents={notice} />
+        <div className="bottom">
+          <div className="center">
+            <Link to="/activity">{">>>活動報告を見る"}</Link>
+          </div>
+        </div>
       </Page>
     </>
   );

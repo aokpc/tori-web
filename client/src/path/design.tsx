@@ -2,8 +2,9 @@
  * 機体設計ページのコンポーネント
  */
 import React from "react";
-import { Halo, links, Page, design_contents, Md2Html } from "./base.tsx";
+import { design_contents, Halo, links, Md2Html, Page } from "./base.tsx";
 import { GLBViewer } from "../three.tsx";
+import { Link } from "react-router-dom";
 
 /**
  * 機体設計ページのメインコンポーネント
@@ -26,6 +27,11 @@ export function Design() {
 
         {/* MarkdownコンテンツをHTMLに変換して表示 */}
         <Md2Html md={design_contents} />
+        <div className="bottom">
+          <div className="center">
+            <Link to="/">{">>>ホームに戻る"}</Link>
+          </div>
+        </div>
       </Page>
     </>
   );
