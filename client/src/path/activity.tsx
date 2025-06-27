@@ -61,29 +61,24 @@ function Contents({ activity }: { activity: ActivityContent[] }) {
     <div
       className={isMobile ? "activity-contents-mobile" : "activity-contents"}
     >
-      {activity.map((content, i) =>
-        content.image
-          ? (
-            <div className={className} key={i}>
-              <h2>{content.title}</h2>
-              <img
-                src={`/image/activity/${content.image}`} // 画像のパスを動的に設定
-                alt={content.title} // 画像の代替テキスト
-                className="activity-image"
-              />
-              <Md2Html
-                md={content.content} /* MarkdownをHTMLに変換して表示 */
-              />
-            </div>
-          )
-          : (
-            <div className={className} key={i}>
-              <h2>{content.title}</h2>
-              <Md2Html md={content.content} />{" "}
-              {/* MarkdownをHTMLに変換して表示 */}
-            </div>
-          )
-      )}
+      {activity.map((content, i) => (
+        <div className={className} key={i}>
+          <h2>{content.title}</h2>
+          <p className="activity-date">
+            {content.date[0]}年{content.date[1]}月{content.date[2]}日
+          </p>
+          {content.image && (
+            <div className="activity-image-wrapper"><img
+              src={`/image/activity/${content.image}`} // 画像のパスを動的に設定
+              alt={content.title} // 画像の代替テキスト
+              className="activity-image"
+            /></div>
+          )}
+          <Md2Html
+            md={content.content} /* MarkdownをHTMLに変換して表示 */
+          />
+        </div>
+      ))}
     </div>
   );
 }

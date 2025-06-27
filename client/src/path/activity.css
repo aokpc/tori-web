@@ -17,7 +17,12 @@
 }
 
 .activity-image {
-  width: 300px; /* 画像の幅を固定 */
+  display: block;
+  max-width: 400px; /* 画像の幅を固定 */
+  max-height: 400px; /* 画像の高さを固定 */
+  border-radius: 10px; /* 角を丸くする */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 影を追加 */
+  margin: 0 auto 0 auto;
 }
 
 .activity {
@@ -40,13 +45,22 @@
 .activity h2 {
   font-size: 23px; /* フォントサイズを設定 */
   font-weight: bold; /* フォントを太字に設定 */
-  margin: 10px 0px; /* 上下の余白を設定 */
+  margin: 5px 5px; /* 上下の余白を設定 */
   overflow-wrap: normal; /* テキストの折り返しを設定 */
 }
 
 .activity-mobile h2 {
   font-size: 20px; /* フォントサイズを設定 */
   font-weight: bold; /* フォントを太字に設定 */
-  margin: 10px 0px; /* 上下の余白を設定 */
+  margin: 5px 5px; /* 上下の余白を設定 */
   overflow-wrap: normal; /* テキストの折り返しを設定 */
+}
+
+.activity-date {
+  margin: 5px 10px;
+  font-size: 8px; /* フォントサイズを設定 */
+  line-height: 1.5; /* 行間を設定 */
+  margin: 0;
+  color: #0006;
+  text-align: right;
 }

@@ -2,9 +2,11 @@
  * 機体設計ページのコンポーネント
  */
 import React from "react";
-import { design_contents, Halo, links, Md2Html, Page } from "./base.tsx";
+import { Halo, links, Md2Html, Page } from "./base.tsx";
 import { GLBViewer } from "../three.tsx";
 import { Link } from "react-router-dom";
+
+import design_contents from "./design.md?raw"; // 機体設計のMarkdownコンテンツをインポート
 
 /**
  * 機体設計ページのメインコンポーネント
