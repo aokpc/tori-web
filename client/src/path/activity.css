@@ -18,8 +18,7 @@
 
 .activity-image {
   display: block;
-  max-width: 400px; /* 画像の幅を固定 */
-  max-height: 400px; /* 画像の高さを固定 */
+  max-width: 100%; /* 画像の幅を固定 */
   border-radius: 10px; /* 角を丸くする */
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* 影を追加 */
   margin: 0 auto 0 auto;

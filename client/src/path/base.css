@@ -79,7 +79,6 @@ div.page-content {
 /* h1, h2, h3要素のホバー効果 */
 .page-content h1, .page-content h2, .page-content h3 {
   position: relative; /* ホバー効果のため位置を調整 */
-  overflow: hidden; /* グラデーションがはみ出ないようにする */
 }
 
 /* ホバー時のグラデーション効果 */
