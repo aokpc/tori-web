@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <link rel="icon" href="/image/logo.png" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>開成鳥人間の会 KITE</title>
+  <meta property="og:title" content="開成鳥人間の会 KITE" />
+  <meta property="og:description" content="開成鳥人間の会の公式ウェブサイトです。" />
+  <meta property="og:image" content="https://kite-birdman.f5.si/image/logo.png" />
+  <meta property="og:url" content="https://kite-birdman.f5.si/" />
+  <script>
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", () => {
+        navigator.serviceWorker
+          .register("/worker.js")
+          .then((registration) => {
+            console.log("Service Worker registered with scope:", registration.scope);
+          })
+          .catch((error) => {
+            console.error("Service Worker registration failed:", error);
+          });
+      });
+    }
+  </script>
+  <script type="module" crossorigin src="/assets/index-B7uVzyJO.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-DWsjToxl.css">
+</head>
+
+<body>
+  <div id="root"></div>
+</body>
+
+</html>
