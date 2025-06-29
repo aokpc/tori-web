@@ -23,3 +23,6 @@ client/dist/*
 *.sw?
 
 client/.vite
+
+# deno
+deno.lock

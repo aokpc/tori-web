@@ -168,7 +168,7 @@ div.page-content {
 .halo-content .title {
   position: relative;
   bottom: 5px; /* 下に移動 */
-  font-size: 35px; /* フォントサイズ */
+  font-size: 33px; /* フォントサイズ */
   font-weight: 700; /* 太字 */
   color: #fff; /* テキスト色 */
 }

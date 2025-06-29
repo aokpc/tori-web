@@ -85,3 +85,6 @@ export const activity: ActivityContent[] = [
     date: [2025, 6, 27],
   }
 ];
+
+// client/src/path/design.md 機体設計ページ `/design`
+// client/src/path/root.md ルートページ `/`

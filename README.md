@@ -8,7 +8,7 @@ TypeScript, React, Vite, three.js
 
 ### キャッシュについて
 このサイトの`index.html`以外のもの全ては[worker](./client/public/worker.js)によりキャッシュされます。
-これによる表示の不具合を避けるため、`client/public`内の画像などを置き換える場合は、元のファイルとは別の名前を使用するか(例:`~.v2.png`->`~.v3.png`)、`worker.js`内の`CACHE_NAME`を更新してください。
+これによる表示の不具合を避けるため、`client/public`内の画像などを置き換える場合は、元のファイルとは別の名前を使用するか(例:`~.png`->`~.v2.png`)、`worker.js`内の`CACHE_NAME`を更新してください。
 
 ### ディレクトリ構造
 viteのドキュメントも参考にしてください
